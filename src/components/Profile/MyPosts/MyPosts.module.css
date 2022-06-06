@@ -1,0 +1,52 @@
+.title {
+    text-align: center;
+    margin: 30px 0 30px 0;
+    font-size: 35px;
+    color: black;
+}
+
+.item {
+    display: grid;
+    grid-gap: 50px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+}
+
+.item img {
+    display: block;
+    width: 150px;
+    height: 200px;
+
+}
+
+
+.feedback__title {
+    margin: 0 0 30px 0;
+    font-size: 40px;
+}
+
+
+.feedback__input {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 400;
+    font-style: italic;
+    color: #929292;
+    text-align: left;
+    border: 1px solid #d3d7d9;
+    background-color: #ffffff;
+    height: 100px;
+    width: 100%;
+    padding: 18px;
+
+}
+
+.feedback__button {
+
+
+    padding: 30px;
+    color: #fff;
+    font-size: 17px;
+    background-color: rgb(141, 26, 26);
+}

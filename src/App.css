@@ -1,0 +1,35 @@
+@import "./components/null.css";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: "Playfair Display", serif;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    font-size: 25px;
+    background-color: #faf0be;
+}
+
+.grid {
+
+    min-height: 100%;
+    display: grid;
+    grid-gap: 20px;
+    padding: 60px;
+    grid-template-columns: 0.2fr 1fr;
+    grid-template-rows: 100px 1fr;
+    grid-template-areas:
+        "header header"
+        "sidebar maincontent";
+
+}
+
+@media (max-width:950px) {
+    .grid {
+        grid-template-rows: auto;
+        grid-template-columns: 170px 1fr;
+    }
+}
+
+h1 {
+    color: black;
+}

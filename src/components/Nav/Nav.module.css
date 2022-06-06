@@ -1,0 +1,41 @@
+.sidebar {
+    grid-area: sidebar;
+    background-color: rgb(141, 26, 26);
+    padding: 20px;
+    text-align: center;
+
+
+}
+
+.list {
+    font-size: 30px;
+}
+
+.list li {
+    color: rgb(255, 254, 254);
+    margin: 10px 0 70px 0;
+}
+
+@media (max-width:950px) {
+    .list li {
+        margin: 10px 0 20px 0;
+        font-size: 25px;
+    }
+}
+
+
+.list li a {
+    color: rgb(255, 254, 254);
+
+}
+
+.list li:last-child {
+    margin: 30px 0 0 0;
+
+}
+
+@media (max-width:950px) {
+    .list li:last-child {
+        margin: 10px 0 0 0;
+    }
+}

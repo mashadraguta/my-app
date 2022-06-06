@@ -1,0 +1,11 @@
+.error {
+    border: red solid 1px;
+
+}
+
+.text {
+
+    font-style: italic;
+    font-size: 15px;
+    padding: 20px 0 20px 0;
+}

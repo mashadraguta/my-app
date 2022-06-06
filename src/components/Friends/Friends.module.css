@@ -1,0 +1,58 @@
+h1 {
+    color: rgb(255, 254, 254);
+    font-size: 30px;
+    margin-top: 85px;
+    margin-bottom: 35px;
+
+
+}
+
+@media (max-width:950px) {
+    h1 {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.diff {
+    display: flex;
+}
+
+@media (max-width:950px) {
+    .diff {
+        flex-direction: column;
+    }
+}
+
+.diff_item {
+    margin: 0 0 0 10px;
+}
+
+@media (max-width:950px) {
+    .diff_item {
+        margin: 20px 0 0 0px;
+    }
+}
+
+.diff img {
+    width: 80px;
+    height: 110px;
+
+}
+
+.author_name {
+    font-size: 15px;
+    margin-top: 10px;
+    color: #fff;
+    font-style: italic;
+}
+
+
+
+.activeLink {
+    color: #fff;
+}
+
+button {
+    margin: 20px 20px 0 0;
+}

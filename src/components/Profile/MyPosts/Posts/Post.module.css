@@ -1,0 +1,22 @@
+.style_desc {
+    height: 100px;
+
+    text-align: center;
+    font-style: italic;
+}
+
+
+
+
+.style_wrapper {
+    margin: 20px 0 0 0;
+}
+
+
+.style_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+
+}

@@ -1,0 +1,97 @@
+.wrapper {
+    font-size: 15px;
+    padding: 10px;
+}
+
+.item__wrapper {
+
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas: 'imageColumn messageColumn';
+    grid-template-columns: 0.2fr 1fr;
+    grid-template-rows: 120px;
+
+}
+
+@media (max-width:950px) {
+    .item__wrapper {
+        grid-template-rows: auto;
+    }
+}
+
+
+@media (max-width:645px) {
+    .item__wrapper {
+        align-items: center;
+    }
+}
+
+
+.item__image {
+    grid-area: imageColumn;
+}
+
+.item__img {
+    text-align: center;
+}
+
+.item__img img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+
+}
+
+.item__button {
+    text-align: center;
+    margin-top: 10px;
+
+}
+
+.item__button span {
+    display: block;
+    padding: 7px 30px;
+    border-radius: 20px;
+    background-color: rgb(90, 90, 6);
+
+    color: #fff;
+
+}
+
+.item__author {
+    font-weight: bold;
+}
+
+.item__message {
+    padding: 15px;
+    grid-area: messageColumn;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: 0.3fr 1fr;
+    grid-template-rows: 0.3fr 0.7fr;
+    grid-template-areas: "authorLocation authorLocation"
+        "quote quote";
+
+}
+
+
+.item__message_flex {
+    grid-area: authorLocation;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+@media (max-width:950px) {
+    .item__message_flex {
+        flex-direction: column;
+    }
+}
+
+.item__quote {
+    grid-area: quote;
+    font-style: italic;
+}
+
