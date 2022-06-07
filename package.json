@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "homepage": "https://mashadraguta.github.io/firstApp",
+  "homepage": "https://mashadraguta.github.io/my-app",
   "private": true,
   "dependencies": {
     "@testing-library/user-event": "^13.5.0",

@@ -4,7 +4,7 @@ import NavBar from './components/Nav/Nav';
 import News from './components/News/News';
 import Friends from './components/Friends/Friends';
 import Settings from './components/Settings/Settings';
-import { Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -14,10 +14,9 @@ import { connect } from 'react-redux';
 import { withRouter } from './HOC/WithAuthRedirect';
 import { compose } from 'redux';
 import preloader from './components/images/preloader.svg';
-import { BrowserRouter } from 'react-router-dom';
 import store from './redux/reduxStore';
 import { Provider } from 'react-redux';
-import Preloader from './components/common/Preloader';
+
 
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -76,11 +75,11 @@ const MainApp = (props) => {
 
 
   return (
-    <BrowserRouter>
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <Provider store={store}>
         <AppContainer />
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
   )
 
 
