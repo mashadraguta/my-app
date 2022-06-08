@@ -5,6 +5,7 @@ const ADD_POETRY = 'ADD-POETRY';
 const SET_PROFILE_USERS = 'SET-PROFILE-USERS';
 const SET_STATUS = 'SET-STATUS';
 const DELETE_POST = 'DELETE-POST';
+const SAVE_PHOTO_SUCCESS = 'SAVE-PHOTO-SUCCESS';
 
 
 let initialState = {
@@ -65,7 +66,13 @@ const postsReducer = (state = initialState, action) => {
                 posts: state.posts.filter(item => item.id != action.id),
 
             }
+        }
+        case SAVE_PHOTO_SUCCESS: {
+            return {
+                ...state,
+                profile: { ...state.profile, photos: action.photos },
 
+            }
         }
         default:
             return state;
@@ -77,6 +84,7 @@ export const actionAddPoetryCreator = (newMess) => ({ type: 'ADD-POETRY', newMes
 export const actionDeletePost = (id) => ({ type: 'DELETE-POST', id })
 export const setUsersProfile = (profile) => ({ type: 'SET-PROFILE-USERS', profile })
 export const setUsersStatus = (userStatus) => ({ type: 'SET-STATUS', userStatus })
+export const savePhotoSuccess = (photos) => ({ type: 'SAVE-PHOTO-SUCCESS', photos })
 
 
 
@@ -89,7 +97,7 @@ export const actionAddPoetry = (newMess) => (dispatch) => {
 export const actionDeletePoetry = (id) => (dispatch) => {
     dispatch({
         type: DELETE_POST,
-     
+
     })
 }
 
@@ -110,6 +118,15 @@ export const updateStatusThunkCreator = (userStatus) => (dispatch) => {
 
     profileAPI.updateUsersStatus(userStatus).then((response) => {
         if (response.data.resultCode === 0) { dispatch(setUsersStatus(userStatus)) }
+    })
+}
+
+
+export const savedPhotoThunkCreator = (file) => (dispatch) => {
+
+
+    profileAPI.savePhoto(file).then((response) => {
+        if (response.data.resultCode === 0) { dispatch(savePhotoSuccess(response.data.data.photos)) }
     })
 }
 

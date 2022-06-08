@@ -15,7 +15,7 @@ const NavBar = (props) => {
                 <div className={s.sidebar__menu__item}>
                     <ul className={s.list}>
                         <li>
-                            <NavLink to="/profile" className={s.activeLink}>Profile</NavLink>
+                            <NavLink to="/profile" className={s.activeLink}>My Profile</NavLink>
                         </li>
                         <li>
                             <NavLink to="/dialogs" className={s.activeLink}>Dialogs</NavLink>

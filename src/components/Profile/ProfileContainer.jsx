@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import { setProfileThunkCreator, setStatusThunkCreator, updateStatusThunkCreator } from '../../redux/postsReducer';
+import { setProfileThunkCreator, setStatusThunkCreator, updateStatusThunkCreator,savedPhotoThunkCreator } from '../../redux/postsReducer';
 import { WithAuthRedirect, withRouter } from '../../HOC/WithAuthRedirect';
 import { compose } from 'redux';
 
@@ -12,20 +12,42 @@ import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
 
-    componentDidMount() {
+    refreshProfile() {
         let userId = this.props.router.params.userId;
         if (!userId) {
+            userId = this.props.authorizedUserId;
 
-            userId = 23933;
         }
         this.props.setProfileThunkCreator(userId);
         this.props.setStatusThunkCreator(userId);
 
     }
+    componentDidMount() {
+
+        this.refreshProfile();
+
+    }
+    componentDidUpdate(prevProps, prevState,) {
+
+        if (this.props.router.params.userId != prevProps.router.params.userId) {
+            this.refreshProfile();
+        }
+    }
+
     render() {
-     
+
         return (
-            <Profile {...this.props} userStatus={this.props.userStatus} updateStatusThunkCreator={this.props.updateStatusThunkCreator} />
+
+            <div>
+
+                <Profile {...this.props}
+                    userStatus={this.props.userStatus}
+                    updateStatusThunkCreator={this.props.updateStatusThunkCreator}
+                    isOwner={!this.props.router.params.userId}
+                    savedPhotoThunkCreator={this.props.savedPhotoThunkCreator}
+                />
+
+            </div>
         );
     }
 }
@@ -37,12 +59,13 @@ let mapStateToProps = (state) => {
     return ({
         profile: state.dialogs.profile,
         userStatus: state.dialogs.userStatus,
+        authorizedUserId: state.auth.id,
         isAuth: state.auth.isAuth,
     })
 };
 
 export default compose(
-    connect(mapStateToProps, { setProfileThunkCreator, setStatusThunkCreator, updateStatusThunkCreator }),
+    connect(mapStateToProps, { setProfileThunkCreator, setStatusThunkCreator, updateStatusThunkCreator, savedPhotoThunkCreator }),
     withRouter,
     WithAuthRedirect,
 )(ProfileContainer);

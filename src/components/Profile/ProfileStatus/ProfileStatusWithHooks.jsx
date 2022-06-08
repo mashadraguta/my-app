@@ -6,8 +6,6 @@ import s from './ProfileStatus.module.css'
 
 const ProfileStatusWithHooks = (props) => {
 
-
-
     let [editMode, setEditMode] = useState(false);
     let [userStatus, setStatus] = useState(props.userStatus);
 
@@ -27,8 +25,6 @@ const ProfileStatusWithHooks = (props) => {
     const onStatusChange = (e) => {
         setStatus(e.currentTarget.value);
     }
-
-
 
 
     return (
