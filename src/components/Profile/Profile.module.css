@@ -28,12 +28,27 @@
 
 
 
-
-.info__avatar img {
-    width: 150px;
-    height: 150px;
+.info__container {
+    position: relative;
+    width: 50%;
 }
 
+
+.info__avatar {
+    
+    display: block;
+    width: 65%;
+    height: 65%;
+    backface-visibility: hidden;
+
+
+}
+
+
+
+.info__container:hover .info__avatar {
+    opacity: 0.3;
+}
 
 
 .infos {
@@ -41,8 +56,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-
-
 
 }
 

@@ -3,7 +3,7 @@ import Preloader from '../../common/Preloader';
 import s from '../Profile.module.css';
 import image from '../../images/image2.png';
 import ProfileStatusWithHooks from '../ProfileStatus/ProfileStatusWithHooks';
-
+import UploadImage from '../../common/UploadImage/UploadImage.jsx';
 
 
 
@@ -16,7 +16,6 @@ const Profileinfo = (props) => {
 
     const onMainPhotoSelected = (e) => {
         if (e.target.files.length) {
-
             props.savedPhotoThunkCreator(e.target.files[0])
         }
     }
@@ -30,9 +29,9 @@ const Profileinfo = (props) => {
             </div>
 
             <div className={s.maincontent__info}>
-                <div className={s.info__avatar}>
-                    <img src={props.profile.photos.large || image} ></img>
-                    {props.isOwner ? <input type="file" onChange={onMainPhotoSelected}></input> : ""}
+                <div className={s.info__container}>
+                    <img src={props.profile.photos.large || image} className={s.info__avatar}></img>
+                    {props.isOwner ? <UploadImage onMainPhotoSelected={onMainPhotoSelected} /> : ""}
                 </div>
                 <div className={s.info__infos}>
                     <div className={s.infos}>
