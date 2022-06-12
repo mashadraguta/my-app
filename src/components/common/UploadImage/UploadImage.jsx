@@ -7,7 +7,7 @@ const UploadImage = (props) => {
     return (
         <div className={style.container}>
             <label className={style.customFileUpload}>
-                <input type="file" onChange={props.onMainPhotoSelected} />
+                <input type="file" className = {style.input__image}onChange={props.onMainPhotoSelected} />
                 update image
             </label>
         </div>

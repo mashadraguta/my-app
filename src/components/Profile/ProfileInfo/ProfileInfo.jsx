@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Preloader from '../../common/Preloader';
 import s from '../Profile.module.css';
 import image from '../../images/image2.png';
 import ProfileStatusWithHooks from '../ProfileStatus/ProfileStatusWithHooks';
 import UploadImage from '../../common/UploadImage/UploadImage.jsx';
-
+import background from '../../images/background.jpg';
+import ProfileDataForm from './ProfileDataForm';
 
 
 
 const Profileinfo = (props) => {
+
+    let [editMode, setEditMode] = useState(false);
+
 
     if (!props.profile) {
         return <Preloader />
@@ -20,12 +24,17 @@ const Profileinfo = (props) => {
         }
     }
 
+    const onSubmit = () => {
+        setEditMode(false);
+
+    }
+
     return (
 
         <div>
 
             <div className={s.maincontent__image}>
-                <img src="https://64.media.tumblr.com/fa25cb008890f21c7d65018bd300a14c/753bf278597a4ffd-ee/s500x750/b63c8465f21ef5c71fff7ac1b979dd32acac7860.jpg" alt=""></img>
+                <img src={background} alt=""></img>
             </div>
 
             <div className={s.maincontent__info}>
@@ -33,23 +42,49 @@ const Profileinfo = (props) => {
                     <img src={props.profile.photos.large || image} className={s.info__avatar}></img>
                     {props.isOwner ? <UploadImage onMainPhotoSelected={onMainPhotoSelected} /> : ""}
                 </div>
-                <div className={s.info__infos}>
-                    <div className={s.infos}>
 
-                        <div>{`  FullName : ${props.profile.fullName}`}</div>
-                        <div >{`  UserID : ${props.profile.userId}`}</div>
-                        <div>{`  About Me : ${props.profile.aboutMe}`}</div>
-                        <div>{`  Contact : ${props.profile.contacts.facebook}`}</div>
-                        <div>{`  Carrier : ${(props.profile.lookingForAJob) ? `Looking for a job` : `Frontend developer \n with React `}`}</div>
+                {editMode
+                    ? <ProfileDataForm profile={props.profile} saveChanges={props.saveChanges} onSubmit={onSubmit} />
+                    : <ProfileData profile={props.profile} isOwner={props.isOwner} goToEditMode={() => setEditMode(true)} />}
 
-
-                    </div>
-                </div>
             </div>
             <ProfileStatusWithHooks userStatus={props.userStatus} updateStatusThunkCreator={props.updateStatusThunkCreator} />
         </div>)
 
 }
+
+
+
+const ProfileData = (props) => {
+    return (
+        <div className={s.info__infos}>
+            {props.isOwner && <div><button onClick={props.goToEditMode} className={s.button__edit}>Edit</button></div>}
+            <div className={s.infos}>
+
+
+
+                <div>{`About Me : ${props.profile.aboutMe}`}</div>
+                <div>{`FullName : ${props.profile.fullName}`}</div>
+                <div>{`Looking for a job : ${(props.profile.lookingForAJob)}`}</div>
+                <div className={s.contacts_wrapper}>
+                    {Object.keys(props.profile.contacts).map(key => {
+                        return <Contacts key={key} contactTitle={key} contactValue={props.profile.contacts[key]} />
+
+                    })}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+const Contacts = ({ contactTitle, contactValue }) => {
+    return (
+
+        <div>{contactTitle} : {contactValue}</div>
+
+    );
+}
+
 
 
 export default Profileinfo;

@@ -1,14 +1,15 @@
 import React from 'react';
 import s from './LoginPage.module.css';
 import { connect } from 'react-redux';
-import { logInThunkCreator } from '../redux/authReducer'
+import { logInThunkCreator, getCaptchaThunkCreator } from '../redux/authReducer'
 import { Navigate } from 'react-router-dom';
-import { withRouter, WithAuthRedirect } from '../HOC/WithAuthRedirect';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 const mapStateToProps = (state) => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captcha: state.auth.captcha,
+
 })
 
 const LoginPage = (props) => {
@@ -18,7 +19,7 @@ const LoginPage = (props) => {
     return (
 
         <div>
-            <LoginPageForm {...props} />
+            <LoginPageForm {...props} captcha={props.captcha} />
         </div>
     );
 }
@@ -36,37 +37,34 @@ const SignupSchema = Yup.object().shape({
 const LoginPageForm = (props) => {
 
     return <Formik
+
         initialValues={{
             email: '',
             password: '',
             general: '',
+            captcha: '',
             rememberMe: false,
-
-
         }}
         validationSchema={SignupSchema}
         onSubmit={(initialValues, { setFieldValue }) => {
 
             let email = initialValues.email;
             let password = initialValues.password;
-
-            props.logInThunkCreator(email, password, setFieldValue);
-
+            let captcha = initialValues.captcha;
 
 
-        }}
+            props.logInThunkCreator(email, password, captcha, setFieldValue);
 
-
-    >
+        }}>
 
         {({ isSubmitting, errors, touched, initialValues }) => (
-
             <Form>
 
                 <div className={s.wrapper}>
+
                     <h1 className={s.title}>LOGIN</h1>
                     <label htmlFor="email">Email</label>
-                    <Field name="email" type="text" />
+                    <Field name="email" type="text" className={s.input__loginPage} />
                     {errors.email && touched.email ? (
                         <div className={s.error}>{errors.email}</div>
                     ) : null}
@@ -78,22 +76,17 @@ const LoginPageForm = (props) => {
                         <div className={s.error}>{errors.password}</div>
                     ) : null}
 
-                    <Field className={s.checkbox} name="rememberMe" type="checkbox" />
-                    <div ><label htmlFor="rememberMe">Remember Me</label></div>
-
-                    <Field name="general" />
-
-                    {initialValues.general ? <span>{initialValues.general}</span> : null}
 
 
+                    <Field name="captcha" type="text" />
+                    {props.captcha ? <img src={props.captcha}></img> : ""}
+                    <Field name="general" type="textarea" />
                     <div>
-                        <button type="submit" className={s.feedback__button} disabled={isSubmitting} >LOGIN </button>
+                        <button type="submit" className={s.feedback__button} >LOGIN </button>
                     </div>
 
 
                 </div>
-
-
             </Form>
         )}
     </Formik >

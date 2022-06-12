@@ -35,7 +35,7 @@
 
 
 .info__avatar {
-    
+
     display: block;
     width: 65%;
     height: 65%;
@@ -52,10 +52,9 @@
 
 
 .infos {
-    padding: 20px;
+   
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
 
 }
 
@@ -64,15 +63,41 @@
     margin: 0 0 20px 0;
 }
 
-
-
-.infos :first-child {
-    font-weight: bold;
-}
-
-
-
 .item_text {
     display: flex;
     flex-direction: column;
 }
+
+.button__edit {
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    vertical-align: middle;
+}
+
+.button__edit:hover {
+    background-color: #24292E;
+    color: #FAFBFC;
+    text-decoration: none;
+    transition-duration: 0.1s;
+}
+
+/* .contacts_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+} */

@@ -6,6 +6,7 @@ const SET_PROFILE_USERS = 'SET-PROFILE-USERS';
 const SET_STATUS = 'SET-STATUS';
 const DELETE_POST = 'DELETE-POST';
 const SAVE_PHOTO_SUCCESS = 'SAVE-PHOTO-SUCCESS';
+const UPDATE_PROFILE_INFO = 'UPDATE-PROFILE-INFO';
 
 
 let initialState = {
@@ -27,6 +28,7 @@ let initialState = {
     ],
     profile: null,
     userStatus: "",
+
 
 };
 
@@ -74,6 +76,7 @@ const postsReducer = (state = initialState, action) => {
 
             }
         }
+
         default:
             return state;
     }
@@ -102,10 +105,46 @@ export const actionDeletePoetry = (id) => (dispatch) => {
 }
 
 export const setProfileThunkCreator = (userId) => (dispatch) => {
+
     profileAPI.getUsersProfile(userId).then((response) => {
+
         dispatch(setUsersProfile(response.data));
     })
+
 }
+
+
+export const updateProfileThunkCreator = (profile, setFieldValue) => {
+
+    return async (dispatch, getState) => {
+        const userId = getState().auth.id;
+        const response = await profileAPI.updateUserProfile(profile)
+
+        if (response.data.resultCode === 0) {
+            dispatch(setProfileThunkCreator(userId));
+
+        }
+        else {
+            setFieldValue("aboutMe", response.data.messages.find(item => item.includes('AboutMe')));
+            setFieldValue("lookingForAJobDescription", response.data.messages.find(item => item.includes('LookingForAJobDescription')));
+            setFieldValue("fullName", response.data.messages.find(item => item.includes('FullName')))
+            setFieldValue("contacts.facebook", response.data.messages.find(item => item.includes('Facebook')))
+            setFieldValue("contacts.website", response.data.messages.find(item => item.includes('Website')))
+            setFieldValue("contacts.vk", response.data.messages.find(item => item.includes('Vk')))
+            setFieldValue("contacts.twitter", response.data.messages.find(item => item.includes('Twitter')))
+            setFieldValue("contacts.instagram", response.data.messages.find(item => item.includes('Instagram')))
+            setFieldValue("contacts.youtube", response.data.messages.find(item => item.includes('Youtube')))
+            setFieldValue("contacts.github", response.data.messages.find(item => item.includes('Github')))
+            setFieldValue("contacts.mainLink", response.data.messages.find(item => item.includes('MainLink')))
+
+            return Promise.reject();
+        }
+     
+    }
+}
+
+
+
 export const setStatusThunkCreator = (userId) => (dispatch) => {
 
     profileAPI.getUsersStatus(userId).then((response) => {
@@ -114,7 +153,6 @@ export const setStatusThunkCreator = (userId) => (dispatch) => {
     })
 }
 export const updateStatusThunkCreator = (userStatus) => (dispatch) => {
-
 
     profileAPI.updateUsersStatus(userStatus).then((response) => {
         if (response.data.resultCode === 0) { dispatch(setUsersStatus(userStatus)) }
