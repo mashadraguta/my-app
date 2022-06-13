@@ -6,7 +6,7 @@ import {
     toggleFollowing, setCurrentPage,
     setTotalCount, setUsers,
     toggleFetching, unfollow
-} from '../../redux/usersReducer.ts';
+} from '../../redux/usersReducer';
 import React, { Component } from 'react';
 import Users from './Users';
 import Preloader from '../common/Preloader';
