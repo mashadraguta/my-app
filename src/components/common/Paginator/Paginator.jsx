@@ -1,31 +1,67 @@
 import React from 'react';
 import s from './Paginator.module.css'
+import ReactPaginate from 'react-paginate';
 
 
 
 const Paginator = (props) => {
 
-    let pagesCount = Math.ceil(props.totalCount / props.pageSize);
-    let pages = [];
-    for (let i = 3200; i <= pagesCount; i++) {
-        pages.push(i);
+
+    const pageCount = Math.ceil(props.totalCount / props.pageSize);
+
+    function handlePageClick({ selected: selectedPage }) {
+
+        props.onPageChanged(selectedPage + 1);
     }
 
     return (
+        <>
+            <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                pageCount={pageCount}
+                pageClassName={s.pageCount}
+                onPageChange={handlePageClick}
+                containerClassName={s.pagination}
+                previousLinkClassName={s.previousLinkClassName}
+                nextLinkClassName={s.nextLinkClassName}
+                disabledLinkClassName={"disabled-Link-Class-Name"}
+                activeClassName={s.activeClassName}
 
-        <div>
-            <div className={s.wrapper_pagination}>
-                {pages.map(item => {
-                    return <button className={props.currentPage === item && s.pagination}
-                        onClick={(e) => { props.onPageChanged(item) }}>{item}</button>
-                }
-                )}
-            </div>
-        </div>
+            >
 
+            </ReactPaginate>
 
+        </>
     );
 }
+// const Paginator = (props) => {
+
+//     let pagesCount = Math.ceil(props.totalCount / props.pageSize);
+//     let pages = [];
+//     for (let i = 1; i <= pagesCount; i++) {
+//         pages.push(i);
+//     }
+
+//     return (
+
+//         <div>
+//             <div className={s.wrapper_pagination}>
+//                 {pages.map(item => {
+
+//                     return <button className={classname({
+//                         [s.pagination]: props.currentPage === item
+//                     })}
+//                         onClick={(e) => { props.onPageChanged(item) }}>{item}</button>
+//                 }
+//                 )}
+//             </div>
+//         </div>
+
+
+//     );
+// }
+
 
 export default Paginator;
 

@@ -56,7 +56,7 @@ export const authenticationThunkCreator = () => {
             dispatch(setAuthUserData(id, email, login, true));
         }
 
-
+   
     }
 
 }

@@ -13,14 +13,15 @@ const TOGGLE_IS_FOLLOWING = 'TOGGLE-IS-FOLLOWING';
 
 let initialState = {
     users: [],
-    pageSize: 6,
+    pageSize: 5,
     totalUserCount: 0,
     currentPage: 1,
     isFetching: true,
     followingInProgress: [], //this array will carry the picked-up id by pushing the bottom
-    fake: 10,
+   
 
 };
+
 
 const usersReducer = (state = initialState, action) => {
 
@@ -136,7 +137,7 @@ export const unfollowThunkCreator = (usersId) => {
 export const followThunkCreator = (usersId) => {
 
     return async (dispatch) => {
-        
+
         dispatch(toggleFollowing(true, usersId));
 
         let data = await profileAPI.getFollow(usersId);

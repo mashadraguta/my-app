@@ -7,12 +7,7 @@ import Paginator from '../common/Paginator/Paginator';
 
 
 const Users = (props) => {
-
-    // let pagesCount = Math.ceil(props.totalCount / props.pageSize);
-    // let pages = [];
-    // for (let i = 3190; i <= pagesCount; i++) {
-    //     pages.push(i);
-    // }
+   
     return (
 
         <div>
@@ -22,14 +17,7 @@ const Users = (props) => {
                 pageSize={props.pageSize}
 
             />
-            {/* <div className={s.wrapper_pagination}>
-                {pages.map(item => {
-                    return <button className={props.currentPage === item && s.pagination}
-                        onClick={(e) => { props.onPageChanged(item) }}>{item}</button>
-
-                }
-                )}
-            </div> */}
+          
             {props.users.map(item => <div key={item.id}>
                 <div className={s.wrapper}>
                     <div className={s.item__wrapper}>

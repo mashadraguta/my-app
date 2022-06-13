@@ -4,7 +4,7 @@ import NavBar from './components/Nav/Nav';
 import News from './components/News/News';
 import Friends from './components/Friends/Friends';
 import Settings from './components/Settings/Settings';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -17,12 +17,7 @@ import preloader from './components/images/preloader.svg';
 import store from './redux/reduxStore';
 import { Provider } from 'react-redux';
 
-
-//import DialogsContainer from './components/Dialogs/DialogsContainer';
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-
-
-
 
 class App extends Component {
 
@@ -43,6 +38,7 @@ class App extends Component {
         <div className='grid-main'>
           <Suspense fallback={<div> LOADING </div>}>
             <Routes>
+              <Route path="/" element={<ProfileContainer />} />
               <Route path='/profile/:userId' element={<ProfileContainer animate={true} />} />
               <Route path='/profile' element={<ProfileContainer />} />
               <Route path='/dialogs' element={<DialogsContainer />} />
