@@ -1,17 +1,17 @@
 import React from 'react';
-import s from './Paginator.module.css'
 import ReactPaginate from 'react-paginate';
+import  s from './Paginator.module.css';
+//const { s } = require('./Paginator.module.css');
 
 
 
-const Paginator = (props) => {
 
 
-    const pageCount = Math.ceil(props.totalCount / props.pageSize);
+const Paginator = ({ onPageChanged, pageSize, totalCount }) => {
 
+    const pageCount = Math.ceil(totalCount / pageSize);
     function handlePageClick({ selected: selectedPage }) {
-
-        props.onPageChanged(selectedPage + 1);
+        onPageChanged(selectedPage + 1);
     }
 
     return (
@@ -27,7 +27,6 @@ const Paginator = (props) => {
                 nextLinkClassName={s.nextLinkClassName}
                 disabledLinkClassName={"disabled-Link-Class-Name"}
                 activeClassName={s.activeClassName}
-
             >
 
             </ReactPaginate>
@@ -35,6 +34,12 @@ const Paginator = (props) => {
         </>
     );
 }
+
+
+export default Paginator;
+
+
+
 // const Paginator = (props) => {
 
 //     let pagesCount = Math.ceil(props.totalCount / props.pageSize);
@@ -63,15 +68,10 @@ const Paginator = (props) => {
 // }
 
 
-export default Paginator;
 
 
-{/* <button disabled={props.followingInProgress.some(id => id === item.id)} onClick={() => {
-    //we pick up an id by pushing the button, then some method returns true, because the id is already here
-    // so it will be disabled=={true}
-    // disabled becomes true only when we pick an id, that allow only the pushed button became disabled
 
- */}
+
 
 
 

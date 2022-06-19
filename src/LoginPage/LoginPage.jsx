@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './LoginPage.module.css';
 import { connect } from 'react-redux';
-import { logInThunkCreator, getCaptchaThunkCreator } from '../redux/authReducer'
+import { logInThunkCreator, getCaptchaThunkCreator } from '../redux/authReducer.ts'
 import { Navigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';

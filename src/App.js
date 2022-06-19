@@ -8,7 +8,7 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
-import { initialized } from './redux/appReducer';
+import { initialized } from './redux/appReducer.ts';
 import LoginPage from './LoginPage/LoginPage';
 import { connect } from 'react-redux';
 import { withRouter } from './HOC/WithAuthRedirect';

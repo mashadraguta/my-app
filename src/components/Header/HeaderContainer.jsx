@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import Header from './Header';
-import {  logOutThunkCreator } from '../../redux/authReducer';
+import { logOutThunkCreator } from '../../redux/authReducer.ts';
 import { connect } from 'react-redux';
 
 

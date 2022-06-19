@@ -30,14 +30,6 @@
     cursor: pointer;
 }
 
-/* .previousLinkClassName,
-.nextLinkClassName,
-.pageCount a {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-} */
-
 .previousLinkClassName,
 .nextLinkClassName,
 .pageCount a:hover {
