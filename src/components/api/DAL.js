@@ -12,11 +12,13 @@ const instance = axios.create({
 
 export const getUsersAPI = {
     getUsers(currentPage = 1, pageSize) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`)       
             .then(response => response.data)
+          
 
     },
-
+    
 
 }
 
@@ -63,7 +65,7 @@ export const authAPI = {
         return instance.get('auth/me')
 
     },
-    logIn( email, password, captcha = null ) {
+    logIn(email, password, captcha = null) {
         return instance.post('auth/login', {
             email,
             password,

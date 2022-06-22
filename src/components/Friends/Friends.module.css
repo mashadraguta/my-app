@@ -1,11 +1,11 @@
-h1 {
-    color: rgb(255, 254, 254);
+/* h1 {
+    color: rgb(0, 0, 0);
     font-size: 30px;
     margin-top: 85px;
     margin-bottom: 35px;
 
 
-}
+} */
 
 @media (max-width:950px) {
     h1 {
@@ -16,6 +16,8 @@ h1 {
 
 .diff {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 @media (max-width:950px) {
@@ -43,14 +45,17 @@ h1 {
 .author_name {
     font-size: 15px;
     margin-top: 10px;
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-style: italic;
 }
 
 
 
 .activeLink {
-    color: #fff;
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    margin-top: 85px;
+    margin-bottom: 35px;
 }
 
 button {

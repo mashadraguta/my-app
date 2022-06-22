@@ -22,8 +22,8 @@ class ProfileContainer extends React.Component {
         let userId = this.props.router.params.userId;
         if (!userId) {
             userId = this.props.authorizedUserId;
-
         }
+        debugger;
         this.props.setProfileThunkCreator(userId);
         this.props.setStatusThunkCreator(userId);
 
@@ -38,6 +38,7 @@ class ProfileContainer extends React.Component {
         if (this.props.router.params.userId != prevProps.router.params.userId) {
             this.refreshProfile();
         }
+
     }
 
     render() {
@@ -77,7 +78,7 @@ export default compose(
             setStatusThunkCreator,
             updateStatusThunkCreator,
             savedPhotoThunkCreator,
-       
+
         }),
     withRouter,
     WithAuthRedirect,

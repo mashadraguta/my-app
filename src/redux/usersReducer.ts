@@ -25,7 +25,7 @@ interface UnfollowType {
 
 interface SetUsersType {
     type: UserActionTypes.SET_USERS
-    users: UsersArrayType | null
+    users: Array<UsersArrayType>
 }
 interface SetPageType {
     type: UserActionTypes.SET_CURRENT_PAGE
@@ -34,7 +34,7 @@ interface SetPageType {
 
 interface SetTotalCountType {
     type: UserActionTypes.SET_TOTAL_COUNT
-    totalCount: number
+    totalItemsCount: number
 }
 interface ToggleFetchingType {
     type: UserActionTypes.TOGGLE_IS_FETCHING
@@ -53,12 +53,12 @@ interface PhotosArrayType {
     large: string
 }
 
-interface UsersArrayType {
-    name: string
+export type UsersArrayType = {
+    name: string | null
     id: number
-    photos: PhotosArrayType | null
+    photos: PhotosArrayType
     status: string | null
-    followed: boolean
+    followed: boolean | null
 }
 
 
@@ -66,17 +66,27 @@ export type ActionUsersType = FollowType | UnfollowType | SetUsersType | SetPage
 
 
 let initialState = {
-    users: [],
+    users: [] as Array<UsersArrayType>,
     pageSize: 5,
-    totalUserCount: 0,
+    totalItemsCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: []
+    followingInProgress: [] as Array<number>
+};
+
+
+export type InitialStateType = {
+    users: Array<UsersArrayType>,
+    pageSize: number,
+    totalItemsCount: number,
+    currentPage: number,
+    isFetching: boolean,
+    followingInProgress: Array<number>,
 };
 
 
 
-const usersReducer = (state = initialState, action: ActionUsersType) => {
+const usersReducer = (state = initialState, action: any): InitialStateType => {
 
     switch (action.type) {
 
@@ -111,7 +121,7 @@ const usersReducer = (state = initialState, action: ActionUsersType) => {
             return { ...state, currentPage: action.currentPage }
         }
         case UserActionTypes.SET_TOTAL_COUNT: {
-            return { ...state, totalCount: action.totalCount }
+            return { ...state, totalItemsCount: action.totalItemsCount }
         }
         case UserActionTypes.TOGGLE_IS_FETCHING: {
             return { ...state, isFetching: action.isFetching }
@@ -134,9 +144,9 @@ const usersReducer = (state = initialState, action: ActionUsersType) => {
 
 export const follow = (usersId: number): FollowType => ({ type: UserActionTypes.FOLLOW, usersId });
 export const unfollow = (usersId: number): UnfollowType => ({ type: UserActionTypes.UNFOLLOW, usersId });
-export const setUsers = (users: UsersArrayType): SetUsersType => ({ type: UserActionTypes.SET_USERS, users });
+export const setUsers = (users: Array<UsersArrayType>): SetUsersType => ({ type: UserActionTypes.SET_USERS, users });
 export const setCurrentPage = (currentPage: number): SetPageType => ({ type: UserActionTypes.SET_CURRENT_PAGE, currentPage });
-export const setTotalCount = (totalCount: number): SetTotalCountType => ({ type: UserActionTypes.SET_TOTAL_COUNT, totalCount });
+export const setTotalCount = (totalItemsCount: number): SetTotalCountType => ({ type: UserActionTypes.SET_TOTAL_COUNT, totalItemsCount });
 export const toggleFetching = (isFetching: boolean): ToggleFetchingType => ({ type: UserActionTypes.TOGGLE_IS_FETCHING, isFetching });
 export const toggleFollowing = (isFetching: boolean, usersId: number): ToggleFetchingFollowType => ({ type: UserActionTypes.TOGGLE_IS_FOLLOWING, isFetching, usersId });
 
@@ -147,13 +157,11 @@ export const getUserThunkCreator = (page: number, pageSize: number) => {
 
         dispatch(toggleFetching(true));
         dispatch(setCurrentPage(page));
-
-        let data = await getUsersAPI.getUsers(page, pageSize);
-
+        let data = await getUsersAPI.getUsers(page, pageSize);     
         dispatch(toggleFetching(false));
         dispatch(setUsers(data.items));
         dispatch(setTotalCount(data.totalCount));
-
+  
 
     }
 }

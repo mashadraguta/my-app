@@ -1,10 +1,20 @@
 
 
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import s from './ProfileStatus.module.css'
 
 
-class ProfileStatus extends Component {
+type PropsType = {
+    userStatus: string
+    updateStatusThunkCreator: (userStatus: string) => void
+}
+
+type StateType = {
+    editMode: boolean
+    userStatus: string
+}
+
+class ProfileStatus extends Component<PropsType, StateType> {
 
     state = {
         editMode: false,
@@ -13,7 +23,7 @@ class ProfileStatus extends Component {
 
 
     activateEditMode = () => {
-  
+
         this.setState({
             editMode: true,
         })
@@ -29,7 +39,7 @@ class ProfileStatus extends Component {
         this.props.updateStatusThunkCreator(this.state.userStatus)
     }
 
-    onStatusChange = (e) => {
+    onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({
             userStatus: e.currentTarget.value,
         })
@@ -37,7 +47,7 @@ class ProfileStatus extends Component {
 
     }
 
-    componentDidUpdate = (prevProps, prevState) => {
+    componentDidUpdate = (prevProps: PropsType, prevState: StateType) => {
 
         if (prevProps.userStatus !== this.props.userStatus) {
             this.setState({

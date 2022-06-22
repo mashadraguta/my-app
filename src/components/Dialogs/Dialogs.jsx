@@ -46,10 +46,6 @@ const Dialogs = (props) => {
         <Message id={m.id} text={m.text} />
     )
 
-
-    // if (!props.isAuth) {
-    //     return <Navigate to="/login" />
-    // }
     return (
         <div className={s.wrapper}>
             <div className={s.dialogsItems}>

@@ -3,12 +3,14 @@
     display: grid;
     grid-template-columns: 2fr 5fr;
     padding: 20px;
-    background-color: #3d3d39;
+    background-color: #7c7c77;
 
 
 }
 
-
+.dialogsItems {
+    margin: 0 0 20px 0;
+}
 
 .names {
     text-align: left;
@@ -19,7 +21,7 @@
 
 .nameSS {
     color: black;
-    margin: 0 0 20px 0;
+    margin: 0 0 90px 0;
 
 }
 
@@ -28,9 +30,6 @@
 }
 
 
-.message {
-    margin: 0 0 20px 0;
-}
 
 .message {
     margin: 0 0 50px 0;

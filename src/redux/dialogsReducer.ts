@@ -12,18 +12,18 @@ export type MessagesPageType = {
 
 let initialState = {
     dialogsPage: [
-        { name: 'Senegal ', id: '1' },
-        { name: ' Belgrade', id: '2' },
-        { name: 'Sighisoara ', id: '3' },
-        { name: 'Maguri - Racatau ', id: '4' },
-        { name: 'Tabriz ', id: '5' },
+        { name: 'Robert M. Pirsig', id: '1' },
+        { name: 'Nikos Kazantzakis', id: '2' },
+        { name: 'Nicolas Bouvier', id: '3' },
+        { name: 'Richard Bach', id: '4' },
+       
     ] as Array<DialogsPageType>,
 
     messagesPage: [
-        { id: '1', text: 'Many months have gone' },
-        { id: '2', text: 'You worked real hard to have what you have' },
-        { id: '3', text: 'The happiness is real only when is shared' },
-        { id: '4', text: 'Come ride with me!' },
+        { id: '1', text: 'We just have to keep going until we find out what’s wrong or find out why we don’t know what’s wrong.' },
+        { id: '2', text: 'You have everything but one thing: madness. A man needs a little madness or else - he never dares cut the rope and be free.' },
+        { id: '3', text: `On croit qu'on fait un voyage, mais bientôt c'est le voyage qui vous fait, ou vous défait.` },
+        { id: '4', text: 'To fly as fast as thought, to anywhere that is, you must begin by knowing that you have already arrived' },
 
     ] as Array<MessagesPageType>,
 }

@@ -7,24 +7,25 @@ const { authAPI, securityauthAPI } = require("../components/api/DAL");
 
 
 
-export interface AuthInitialState {
-    id?: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean,
-    isFetching: boolean,
-    captcha: string | null,
+// export type AuthInitialState = {
+//     id?: number | null,
+//     email?: string | null,
+//     login?: string | null,
+//     isAuth?: boolean,
+//     isFetching?: boolean,
+//     captcha?: string | null,
 
-}
+// }
 
 let initialState = {
     id: 0,
-    email: null,
-    login: null,
+    email: null as string | null,
+    login: null as string | null,
     isAuth: false,
     isFetching: false,
-    captcha: null,
+    captcha: null as string | null,
 }
+type AuthInitialState = typeof initialState
 
 export enum AuthActionTypes {
     SET_USER_DATA = 'SET_USER_DATA',
@@ -48,10 +49,12 @@ interface GetCaptcha {
     payload: { captcha: string | null }
 }
 
-
+// Uncaught Error: The slice reducer for key "auth" returned undefined during initialization. 
+// If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined. 
+// If you don't want to set a value for this reducer, you can use null instead of undefined.
 export type ActionUserType = SetUserData | GetCaptcha
 
-const authReducer = (state = initialState, action: ActionUserType): AuthInitialState => {
+const authReducer = (state = initialState, action: any): AuthInitialState => {
 
     switch (action.type) {
 
@@ -68,7 +71,7 @@ const authReducer = (state = initialState, action: ActionUserType): AuthInitialS
             return state;
     }
 }
-
+//'{ id: number; email: null; login: null; isAuth: boolean; isFetching: boolean; captcha: null; }'.
 
 export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => (
     {

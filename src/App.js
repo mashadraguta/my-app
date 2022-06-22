@@ -42,10 +42,9 @@ class App extends Component {
               <Route path='/profile/:userId' element={<ProfileContainer animate={true} />} />
               <Route path='/profile' element={<ProfileContainer />} />
               <Route path='/dialogs' element={<DialogsContainer />} />
-              <Route path='/news' element={<News />} />
-              <Route path='/friends' element={<Friends />} />
+              <Route path='/news' element={<Friends />} />
               <Route path='/settings' element={<Settings />} />
-              <Route path='/users' element={< UsersContainer />} />
+              <Route path='/users' element={< UsersContainer title={'patience conquer all thing'} />} />
               <Route path='/auth' element={< LoginPage />} />
               <Route path='/login' element={< LoginPage />} />
             </Routes>
