@@ -1,3 +1,79 @@
 .wrapper {
     padding: 20px;
 }
+
+
+
+.statusSpan {
+
+    border: 2px solid black;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    padding: 50px;
+}
+
+
+.statusCont .spanHoverComp {
+    visibility: hidden;
+}
+
+.statusHover:hover {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+.statusHover {
+
+    min-width: 100%;
+    min-height: 100%;
+
+}
+
+.statusCont:hover .spanHoverComp {
+    visibility: visible;
+}
+
+.container {
+
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: absolute;
+    padding: 50px;
+
+
+}
+
+.container:hover {
+    width: 100%;
+    height: 100%;
+    background-color: #cd853f;
+
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    /* transition: 0.3s ease; */
+    cursor: pointer;
+    top: 0;
+    left: 0;
+}
+
+.spanHoverComp {
+    color: #faf0be;
+}
+
+.statusInput {
+    border: 2px none black;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+    padding: 50px;
+}
+
+.statusDiv {
+    padding: 30px 30px 30px 0;
+    font-style: italic;
+}

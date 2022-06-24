@@ -1,9 +1,10 @@
 @import "./components/null.css";
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,300&display=swap');
+
 
 body {
-    font-family: "Playfair Display", serif;
-    color: rgb(0, 0, 0);
+    font-family: "Lato";
+    color: #4d4959;
     font-weight: 500;
     font-size: 25px;
     background-color: #faf0be;

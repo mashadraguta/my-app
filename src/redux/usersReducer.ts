@@ -1,4 +1,4 @@
-
+import { Dispatch } from "redux";
 const { getUsersAPI, profileAPI } = require('../components/api/DAL')
 
 
@@ -14,33 +14,33 @@ export enum UserActionTypes {
 }
 
 
-interface FollowType {
+type FollowType = {
     type: UserActionTypes.FOLLOW
     usersId: number
 }
-interface UnfollowType {
+type UnfollowType = {
     type: UserActionTypes.UNFOLLOW
     usersId: number
 }
 
-interface SetUsersType {
+type SetUsersType = {
     type: UserActionTypes.SET_USERS
     users: Array<UsersArrayType>
 }
-interface SetPageType {
+type SetPageType = {
     type: UserActionTypes.SET_CURRENT_PAGE
     currentPage: number
 }
 
-interface SetTotalCountType {
+type SetTotalCountType = {
     type: UserActionTypes.SET_TOTAL_COUNT
     totalItemsCount: number
 }
-interface ToggleFetchingType {
+type ToggleFetchingType = {
     type: UserActionTypes.TOGGLE_IS_FETCHING
     isFetching: boolean
 }
-interface ToggleFetchingFollowType {
+type ToggleFetchingFollowType = {
     type: UserActionTypes.TOGGLE_IS_FOLLOWING
     isFetching: boolean
     usersId: number
@@ -48,7 +48,7 @@ interface ToggleFetchingFollowType {
 
 
 
-interface PhotosArrayType {
+type PhotosArrayType = {
     small: string
     large: string
 }
@@ -62,7 +62,10 @@ export type UsersArrayType = {
 }
 
 
-export type ActionUsersType = FollowType | UnfollowType | SetUsersType | SetPageType | SetTotalCountType | ToggleFetchingType | ToggleFetchingFollowType
+export type ActionUsersType = FollowType | UnfollowType |
+    SetUsersType | SetPageType
+    | SetTotalCountType | ToggleFetchingType |
+    ToggleFetchingFollowType
 
 
 let initialState = {
@@ -71,7 +74,8 @@ let initialState = {
     totalItemsCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: [] as Array<number>
+    followingInProgress: [] as Array<number>,
+    usersId: ''
 };
 
 
@@ -82,11 +86,13 @@ export type InitialStateType = {
     currentPage: number,
     isFetching: boolean,
     followingInProgress: Array<number>,
+    usersId: string
+
 };
 
 
 
-const usersReducer = (state = initialState, action: any): InitialStateType => {
+const usersReducer = (state = initialState, action: ActionUsersType): InitialStateType => {
 
     switch (action.type) {
 
@@ -148,26 +154,26 @@ export const setUsers = (users: Array<UsersArrayType>): SetUsersType => ({ type:
 export const setCurrentPage = (currentPage: number): SetPageType => ({ type: UserActionTypes.SET_CURRENT_PAGE, currentPage });
 export const setTotalCount = (totalItemsCount: number): SetTotalCountType => ({ type: UserActionTypes.SET_TOTAL_COUNT, totalItemsCount });
 export const toggleFetching = (isFetching: boolean): ToggleFetchingType => ({ type: UserActionTypes.TOGGLE_IS_FETCHING, isFetching });
-export const toggleFollowing = (isFetching: boolean, usersId: number): ToggleFetchingFollowType => ({ type: UserActionTypes.TOGGLE_IS_FOLLOWING, isFetching, usersId });
+export const toggleFollowing = (isFetching: boolean, usersId:number): ToggleFetchingFollowType => ({ type: UserActionTypes.TOGGLE_IS_FOLLOWING, isFetching, usersId });
 
 
 export const getUserThunkCreator = (page: number, pageSize: number) => {
 
-    return async (dispatch: any) => {
+    return async (dispatch: Dispatch<ActionUsersType>) => {
 
         dispatch(toggleFetching(true));
         dispatch(setCurrentPage(page));
-        let data = await getUsersAPI.getUsers(page, pageSize);     
+        let data = await getUsersAPI.getUsers(page, pageSize);
         dispatch(toggleFetching(false));
         dispatch(setUsers(data.items));
         dispatch(setTotalCount(data.totalCount));
-  
+
 
     }
 }
 export const unfollowThunkCreator = (usersId: number) => {
 
-    return async (dispatch: any) => {
+    return async (dispatch: Dispatch<ActionUsersType>) => {
 
         dispatch(toggleFollowing(true, usersId));
 
@@ -182,7 +188,7 @@ export const unfollowThunkCreator = (usersId: number) => {
 }
 export const followThunkCreator = (usersId: number) => {
 
-    return async (dispatch: any) => {
+    return async (dispatch: Dispatch<ActionUsersType>) => {
 
         dispatch(toggleFollowing(true, usersId));
 

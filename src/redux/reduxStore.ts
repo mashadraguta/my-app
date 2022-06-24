@@ -1,4 +1,5 @@
-//import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from "redux";
+import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from "redux";
+import thunkMiddleware from "redux-thunk";
 import authReducer from "./authReducer";
 import dialogsReducer from "./dialogsReducer";
 import postsReducer from "./postsReducer";
@@ -6,23 +7,49 @@ import sideBarReducer from "./sideBarReducer";
 import usersReducer from "./usersReducer";
 import { reducer as formReducer } from 'redux-form'
 import appReducer from "./appReducer";
-//import thunk from 'redux-thunk';
-import { configureStore } from "@reduxjs/toolkit";
 
 
-const store = configureStore({
-    reducer: {
-        profile: dialogsReducer,
-        dialogs: postsReducer,
-        sideBar: sideBarReducer,
-        users: usersReducer,
-        auth: authReducer,
-        form: formReducer,
-        app: appReducer,
-    }
+let rootReducer = combineReducers({
+    profile: dialogsReducer,
+    dialogs: postsReducer,
+    sideBar: sideBarReducer,
+    users: usersReducer,
+    auth: authReducer,
+    form: formReducer,
+    app: appReducer,
 })
-export type RootState = ReturnType<typeof store.getState>
+
+type RootState = typeof rootReducer; // (globalstate: AppStateType) => AppStateType
+export type RootStateType = ReturnType<RootState>
+
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
+// @ts-ignore
+window.__store__ = store
+
 export default store
+
+
+
+
+
+
+
+// const store = configureStore({
+//     reducer: {
+//         profile: dialogsReducer,
+//         dialogs: postsReducer,
+//         sideBar: sideBarReducer,
+//         users: usersReducer,
+//         auth: authReducer,
+//         form: formReducer,
+//         app: appReducer,
+//     }
+// })
+// export type RootState = ReturnType<typeof store.getState>
+// export default store
 
 
 

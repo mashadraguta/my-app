@@ -2,11 +2,11 @@
 import { connect } from 'react-redux';
 import {
     unfollowThunkCreator, followThunkCreator,
-    getUserThunkCreator, UsersArrayType
+    getUserThunkCreator, UsersArrayType, ActionUsersType
 } from '../../redux/usersReducer';
 import React, { Component } from 'react';
 import Users from './Users';
-import { RootState } from '../../redux/reduxStore';
+
 
 import Preloader from '../common/Preloader';
 const {
@@ -69,7 +69,7 @@ class UsersContainer extends Component<PropsType> {
 }
 
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state) => {
 
     return {
         users: getUsers(state),
@@ -88,7 +88,7 @@ const mapStateToProps = (state: any) => {
 // InferableComponentEnhancerWithProps<TStateProps & ResolveThunks<TDispatchProps>, TOwnProps>;
 
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, any>(mapStateToProps,
+export default connect<MapStateToPropsType, MapDispatchToPropsType, ActionUsersType>(mapStateToProps,
     {
         getUserThunkCreator,
         followThunkCreator,

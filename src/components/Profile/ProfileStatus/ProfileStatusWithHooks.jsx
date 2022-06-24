@@ -4,6 +4,16 @@ import React, { useState, useEffect } from 'react';
 import s from './ProfileStatus.module.css'
 
 
+
+
+const SpanHover = () => {
+    return (
+        <div>
+            <div className={s.spanHoverComp}>doubleclick to change status</div>
+        </div>
+    );
+}
+
 const ProfileStatusWithHooks = (props) => {
 
     let [editMode, setEditMode] = useState(false);
@@ -30,16 +40,24 @@ const ProfileStatusWithHooks = (props) => {
     return (
         <div className={s.wrapper}>
             {!editMode &&
-                <div>
-                    <span onDoubleClick={activateEditMode} >
-                        {props.userStatus || "no more crying in the rain"}
-                    </span>
+                <div className={s.statusCont}>
+                    <div className={s.statusDiv}>Hello! How do you feel today?</div>
+                    <div onDoubleClick={activateEditMode} className={s.statusSpan}>
+                        <div className={s.container}>
+                            <span className={s.spanHoverComp}>doubleclick to change status</span>
+                        </div>
+                        <div className={s.statusHover}>{props.userStatus || "no more crying in the rain"}</div>
+                    </div>
+
                 </div>
             }
             {editMode &&
-                <div><input onBlur={deactivateEditMode}
-                    onChange={onStatusChange}
-                    value={userStatus}></input></div>
+                <div>
+                    <div className={s.statusDiv}>Hello! How do you feel today?</div>
+                    <input onBlur={deactivateEditMode}
+                        className={s.statusInput}
+                        onChange={onStatusChange}
+                        value={userStatus}></input></div>
             }
 
         </div>

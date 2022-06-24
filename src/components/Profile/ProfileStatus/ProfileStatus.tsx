@@ -61,8 +61,10 @@ class ProfileStatus extends Component<PropsType, StateType> {
             <div className={s.wrapper}>
                 {!this.state.editMode &&
                     <div>
+                       
                         <span onDoubleClick={this.activateEditMode}>
                             {this.props.userStatus || "no more crying in the rain"}
+
                         </span>
                     </div>
                 }
