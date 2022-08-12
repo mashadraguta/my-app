@@ -1,4 +1,9 @@
-import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from "redux";
+import {
+    applyMiddleware,
+    combineReducers,
+    compose,
+    legacy_createStore as createStore
+} from "redux";
 import thunkMiddleware from "redux-thunk";
 import authReducer from "./authReducer";
 import dialogsReducer from "./dialogsReducer";
@@ -21,6 +26,11 @@ let rootReducer = combineReducers({
 
 type RootState = typeof rootReducer; // (globalstate: AppStateType) => AppStateType
 export type RootStateType = ReturnType<RootState>
+
+
+
+
+
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

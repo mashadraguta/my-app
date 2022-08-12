@@ -10,7 +10,7 @@ import {
 } from '../../redux/postsReducer';
 import { compose } from 'redux';
 import { RootStateType } from '../../redux/reduxStore';
-import Profile from './Profile';
+const { Profile } = require('./Profile');
 
 const { WithAuthRedirect, withRouter } = require('../../HOC/WithAuthRedirect');
 

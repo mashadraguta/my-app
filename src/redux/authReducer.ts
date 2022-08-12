@@ -1,9 +1,11 @@
-
+import { ResultCodes } from './../components/api/DAL';
+import { RootStateType } from './reduxStore';
+import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from "redux";
-//import { authAPI, securityauthAPI } from "../components/api/DAL";
+import { AxiosResponse } from 'axios';
+import { GetAuthMe } from '../components/api/DAL';
 
-
-const { authAPI, securityauthAPI } = require("../components/api/DAL");
+import { authAPI, securityauthAPI } from "../components/api/DAL"
 
 
 
@@ -18,12 +20,13 @@ const { authAPI, securityauthAPI } = require("../components/api/DAL");
 // }
 
 let initialState = {
-    id: 0,
+    id: 0 as number | null,
     email: null as string | null,
     login: null as string | null,
     isAuth: false,
     isFetching: false,
     captcha: null as string | null,
+
 }
 type AuthInitialState = typeof initialState
 
@@ -33,28 +36,40 @@ export enum AuthActionTypes {
 }
 
 
-interface PayloadUserData {
+type PayloadUserData = {
+
     id?: number | null
     email: string | null
     login: string | null
     isAuth: boolean
 }
 
-interface SetUserData {
+type SetUserData = {
     type: AuthActionTypes.SET_USER_DATA
     payload: PayloadUserData
 }
-interface GetCaptcha {
+type GetCaptcha = {
     type: AuthActionTypes.GET_CAPTCHA
     payload: { captcha: string | null }
+}
+
+export interface TypelogInThunkCreator {
+    email: string | null
+    password: string | null
+    captcha?: string | null
+    setFieldValue: (arg: string, arg2: Array<string>) => string
 }
 
 // Uncaught Error: The slice reducer for key "auth" returned undefined during initialization. 
 // If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined. 
 // If you don't want to set a value for this reducer, you can use null instead of undefined.
-export type ActionUserType = SetUserData | GetCaptcha
+//export type ActionUserType = SetUserData | GetCaptcha
 
-const authReducer = (state = initialState, action: any): AuthInitialState => {
+type ActionUsersType = GetCaptcha | SetUserData
+type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, ActionUsersType>
+
+
+const authReducer = (state = initialState, action: ActionUsersType): AuthInitialState => {
 
     switch (action.type) {
 
@@ -85,11 +100,12 @@ export const getCaptchaAC = (captcha: string | null) => (
     })
 
 
-export const authenticationThunkCreator = () => {
-    return async (dispatch: Dispatch<ActionUserType>) => {
-        const response = await authAPI.getAuthMe();
-        if (response.data.resultCode === 0) {
-            let { id, login, email } = response.data.data;
+export const authenticationThunkCreator = (): ThunkType => {
+    return async (dispatch) => {
+        const dataMe = await authAPI.getAuthMe();
+
+        if (dataMe.resultCode === ResultCodes.Success) {
+            let { id, login, email } = dataMe.data;
             dispatch({
                 type: AuthActionTypes.SET_USER_DATA,
                 payload: { id, login, email, isAuth: true }
@@ -100,51 +116,59 @@ export const authenticationThunkCreator = () => {
 }
 
 
-export interface TypelogInThunkCreator {
-    email: string | null
-    password: string | null
-    captcha?: string | null
-    setFieldValue: (arg: string, arg2: string) => string
-}
 
 
-export const logInThunkCreator = (email: string, password: string, captcha: boolean, setFieldValue: (arg: string, arg2: string) => string) => {
-    return async (dispatch: any) => {
+export const logInThunkCreator = (email: string,
+    password: string,
+    captcha: string,
+    setFieldValue:  (field: string, value: any, shouldValidate?: boolean | undefined) => void): ThunkType => {
+    return async (dispatch) => {
+
         const response = await authAPI.logIn(email, password, captcha)
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === ResultCodes.Success) {
 
             dispatch(authenticationThunkCreator());
         }
         else {
-            if (response.data.resultCode === 10) {
+            if (response.data.resultCode === ResultCodes.Captcha) {
                 dispatch(getCaptchaThunkCreator())
-
             }
-            setFieldValue("general", response.data.messages.map((item: any) => item))
+            if (response.data.messages) {
+                setFieldValue("general", response.data.messages.map((item) => item))
+            }
+
         }
 
 
 
     }
 }
-export const getCaptchaThunkCreator = () => {
-    return async (dispatch: Dispatch<ActionUserType>) => {
+export const getCaptchaThunkCreator = (): ThunkType => {
+    return async (dispatch) => {
         const response = await securityauthAPI.getCaptcha();
         const captcha = response.data.url;
-        dispatch({ type: AuthActionTypes.GET_CAPTCHA, payload: { captcha } })
+        dispatch({
+            type: AuthActionTypes.GET_CAPTCHA,
+            payload: { captcha }
+        })
 
     }
 
 }
 
 
-export const logOutThunkCreator = () => {
-    return async (dispatch: Dispatch<ActionUserType>) => {
+export const logOutThunkCreator = (): ThunkType => {
+    return async (dispatch) => {
         const response = await authAPI.logOut();
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === ResultCodes.Success) {
             dispatch({
                 type: AuthActionTypes.SET_USER_DATA,
-                payload: { id: null, login: null, email: null, isAuth: false }
+                payload: {
+                    id: null,
+                    login: null,
+                    email: null,
+                    isAuth: false
+                }
             })
         }
     }

@@ -1,18 +1,45 @@
 import React from 'react';
 import s from './LoginPage.module.css';
 import { connect } from 'react-redux';
-import { logInThunkCreator, getCaptchaThunkCreator } from '../redux/authReducer.ts'
+import { logInThunkCreator, getCaptchaThunkCreator } from '../redux/authReducer'
 import { Navigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { RootStateType } from '../redux/reduxStore';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootStateType) => ({
     isAuth: state.auth.isAuth,
     captcha: state.auth.captcha,
 
 })
 
-const LoginPage = (props) => {
+type MapStateToPropsType = {
+    isAuth: boolean
+    captcha: string | null
+
+
+}
+type MapDispatchToPropsType = {
+    logInThunkCreator: (
+        email: string,
+        password: string,
+        captcha: string,
+        setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void
+    ) => void
+}
+
+interface MyFormValues {
+    email: string
+    password: string
+    general: string
+    captcha: string | null
+    rememberMe?: boolean
+
+}
+
+type PropsType = MyFormValues & MapDispatchToPropsType & MapStateToPropsType
+
+const LoginPage = (props: PropsType) => {
     if (props.isAuth) {
         return <Navigate to={"/profile"} />
     }
@@ -34,7 +61,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 
-const LoginPageForm = (props) => {
+const LoginPageForm = (props: PropsType) => {
 
     return <Formik
 
@@ -76,13 +103,11 @@ const LoginPageForm = (props) => {
                         <div className={s.error}>{errors.password}</div>
                     ) : null}
 
-
-
                     <Field name="captcha" type="text" />
                     {props.captcha ? <img src={props.captcha}></img> : ""}
                     <Field name="general" type="textarea" />
                     <div>
-                        <button type="submit" className={s.feedback__button} >LOGIN </button>
+                        <button type="submit" className={s.feedback__button}>LOGIN </button>
                     </div>
 
 
@@ -94,7 +119,7 @@ const LoginPageForm = (props) => {
 
 
 
-export default connect(mapStateToProps, { logInThunkCreator })(LoginPage);
+export default connect<MapStateToPropsType, MapDispatchToPropsType, null, RootStateType>(mapStateToProps, { logInThunkCreator })(LoginPage);
 
 
 

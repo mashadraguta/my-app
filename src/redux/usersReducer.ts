@@ -1,4 +1,6 @@
+import { RootStateType } from './reduxStore';
 import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
 const { getUsersAPI, profileAPI } = require('../components/api/DAL')
 
 
@@ -90,7 +92,7 @@ export type InitialStateType = {
 
 };
 
-
+type ThunkType = ThunkAction<Promise<any>, RootStateType, unknown, ActionUsersType>
 
 const usersReducer = (state = initialState, action: ActionUsersType): InitialStateType => {
 
@@ -154,12 +156,13 @@ export const setUsers = (users: Array<UsersArrayType>): SetUsersType => ({ type:
 export const setCurrentPage = (currentPage: number): SetPageType => ({ type: UserActionTypes.SET_CURRENT_PAGE, currentPage });
 export const setTotalCount = (totalItemsCount: number): SetTotalCountType => ({ type: UserActionTypes.SET_TOTAL_COUNT, totalItemsCount });
 export const toggleFetching = (isFetching: boolean): ToggleFetchingType => ({ type: UserActionTypes.TOGGLE_IS_FETCHING, isFetching });
-export const toggleFollowing = (isFetching: boolean, usersId:number): ToggleFetchingFollowType => ({ type: UserActionTypes.TOGGLE_IS_FOLLOWING, isFetching, usersId });
+export const toggleFollowing = (isFetching: boolean, usersId: number): ToggleFetchingFollowType => ({ type: UserActionTypes.TOGGLE_IS_FOLLOWING, isFetching, usersId });
 
 
-export const getUserThunkCreator = (page: number, pageSize: number) => {
+export const getUserThunkCreator = (page: number,
+    pageSize: number): ThunkType => {
 
-    return async (dispatch: Dispatch<ActionUsersType>) => {
+    return async (dispatch) => {
 
         dispatch(toggleFetching(true));
         dispatch(setCurrentPage(page));
@@ -171,9 +174,9 @@ export const getUserThunkCreator = (page: number, pageSize: number) => {
 
     }
 }
-export const unfollowThunkCreator = (usersId: number) => {
+export const unfollowThunkCreator = (usersId: number): ThunkType => {
 
-    return async (dispatch: Dispatch<ActionUsersType>) => {
+    return async (dispatch) => {
 
         dispatch(toggleFollowing(true, usersId));
 
@@ -186,9 +189,9 @@ export const unfollowThunkCreator = (usersId: number) => {
 
     }
 }
-export const followThunkCreator = (usersId: number) => {
+export const followThunkCreator = (usersId: number): ThunkType => {
 
-    return async (dispatch: Dispatch<ActionUsersType>) => {
+    return async (dispatch) => {
 
         dispatch(toggleFollowing(true, usersId));
 

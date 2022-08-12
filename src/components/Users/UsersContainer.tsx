@@ -9,6 +9,8 @@ import Users from './Users';
 
 
 import Preloader from '../common/Preloader';
+import { RootStateType } from '../../redux/reduxStore';
+import { compose } from 'redux';
 const {
     getCurrentPage, getFollowingInProgress,
     getIsFetching, getPageSize,
@@ -33,7 +35,7 @@ type MapDispatchToPropsType = {
 }
 
 type OwnPropsType = {
-
+    title?: string
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
@@ -42,7 +44,9 @@ type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
 class UsersContainer extends Component<PropsType> {
 
     componentDidMount() {
-        this.props.getUserThunkCreator(this.props.currentPage, this.props.pageSize);
+
+        this.props.getUserThunkCreator(this.props.currentPage,
+            this.props.pageSize);
     }
 
     onPageChanged = (pageNumber: number) => {
@@ -52,7 +56,7 @@ class UsersContainer extends Component<PropsType> {
     render() {
 
         return <div>
-
+            <h1>{this.props.title}</h1>
             <Preloader isFetching={this.props.isFetching} />
             <Users totalItemsCount={this.props.totalItemsCount}
                 pageSize={this.props.pageSize}
@@ -69,7 +73,7 @@ class UsersContainer extends Component<PropsType> {
 }
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
 
     return {
         users: getUsers(state),
@@ -78,22 +82,19 @@ const mapStateToProps = (state) => {
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
+
     }
 
 }
 
-// <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
-//(mapStateToProps: MapStateToPropsParam<TStateProps, TOwnProps, State>, 
-//mapDispatchToProps: MapDispatchToPropsParam<TDispatchProps, TOwnProps>):
-// InferableComponentEnhancerWithProps<TStateProps & ResolveThunks<TDispatchProps>, TOwnProps>;
+//    <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
 
-
-export default connect<MapStateToPropsType, MapDispatchToPropsType, ActionUsersType>(mapStateToProps,
-    {
+export default compose(
+    connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, RootStateType>(mapStateToProps, {
         getUserThunkCreator,
         followThunkCreator,
         unfollowThunkCreator
 
-    })(UsersContainer);
+    }))(UsersContainer);
 
 

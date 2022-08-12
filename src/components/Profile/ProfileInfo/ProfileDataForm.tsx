@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
 import { Formik, Field, Form } from 'formik';
 import s from '../Profile.module.css'
-import { updateProfileThunkCreator } from '../../../redux/postsReducer';
+import { ProfileContactsType, ProfileType, updateProfileThunkCreator } from '../../../redux/postsReducer';
 import { connect } from 'react-redux';
+import { RootStateType } from '../../../redux/reduxStore';
+
+type MapDispatchToPropsType = {
+    updateProfileThunkCreator: (
+        //initialValues: initialValuesType,
+        profile: ProfileType,
+        setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void
+    ) => Promise<void>,
+    profile: ProfileType
+    onSubmit: () => Promise<void>
+}
 
 
+export type initialValuesType = {
+    aboutMe: string
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: ProfileContactsType
+}
 
-const ProfileDataForm = (props) => {
-
-    const validateEmail = (value) => {
-        // let error;
-        // if (!value) {
-        //     error = 'Required';
-        // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-        //     error = 'Invalid email address';
-        // }
-        // return error;
-    }
+type PropsType = initialValuesType & MapDispatchToPropsType
+const ProfileDataForm = (props: PropsType) => {
 
     return <Formik
 
@@ -43,7 +51,6 @@ const ProfileDataForm = (props) => {
                 () => {
                     props.onSubmit()
                 }
-
             );
 
         }}>
@@ -57,7 +64,7 @@ const ProfileDataForm = (props) => {
                 <div>
 
                     <label htmlFor="aboutMe">About me</label>
-                    <Field name="aboutMe" as="textarea" placeholder={initialValues.aboutMe} validate={validateEmail} />
+                    <Field name="aboutMe" as="textarea" />
 
                     <label htmlFor="fullName">Full name</label>
                     <Field name="fullName" type="text" />
@@ -66,8 +73,7 @@ const ProfileDataForm = (props) => {
                     <Field name="lookingForAJobDescription" type="text" />
 
                     {Object.keys(props.profile.contacts).map(key => {
-                        return <div >
-
+                        return <div>
                             <label htmlFor={"contacts." + key}>{key}</label>
                             <Field name={"contacts." + key} type="text" />
                         </div>
@@ -85,9 +91,6 @@ const ProfileDataForm = (props) => {
 }
 
 
-export default connect(null, { updateProfileThunkCreator })(ProfileDataForm);
+export default connect<MapDispatchToPropsType>(null, { updateProfileThunkCreator })(ProfileDataForm);
 
-
-
-//enableReinitialize
 

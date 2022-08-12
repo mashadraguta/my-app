@@ -6,6 +6,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/user-event": "^13.5.0",
+    "@types/axios": "^0.14.0",
     "@types/classnames": "^2.3.1",
     "@types/jest": "^28.1.1",
     "@types/node": "^17.0.42",
@@ -36,7 +37,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "postinstall": "node-prune"
   },
   "eslintConfig": {
     "extends": [
