@@ -1,16 +1,16 @@
 
 import { connect } from 'react-redux';
 import {
-    unfollowThunkCreator, followThunkCreator,
-    getUserThunkCreator, UsersArrayType, ActionUsersType
+    unfollowThunkCreator, 
+    followThunkCreator,
+    getUserThunkCreator
 } from '../../redux/usersReducer';
 import React, { Component } from 'react';
 import Users from './Users';
-
-
 import Preloader from '../common/Preloader';
 import { RootStateType } from '../../redux/reduxStore';
 import { compose } from 'redux';
+import { UsersType } from '../../types/types';
 const {
     getCurrentPage, getFollowingInProgress,
     getIsFetching, getPageSize,
@@ -23,7 +23,7 @@ type MapStateToPropsType = {
     pageSize: number
     isFetching: boolean
     totalItemsCount: number
-    users: Array<UsersArrayType>
+    users: Array<UsersType>
     followingInProgress: Array<number>
 
 
@@ -39,6 +39,10 @@ type OwnPropsType = {
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
+
+
+
+
 
 
 class UsersContainer extends Component<PropsType> {

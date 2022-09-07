@@ -1,17 +1,21 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
 import PostValidationForm from '../common/ValidationForm/PostValidationForm';
 import { maxLengthCreator, required } from '../../utils/validators/validators';
+import { DialogsPageType, MessagesPageType } from '../../redux/dialogsReducer';
+
 
 let maxLength30 = maxLengthCreator(300);
 
-export const AddMessageForm = (props) => {
+export type NewMessageFormValuesType = {
+    newPostMessage: string
+}
+
+export const AddMessageForm: React.FC<InjectedFormProps<NewMessageFormValuesType>> = (props) => {
     return (
-
-
         <form onSubmit={props.handleSubmit}>
             <div className={s.item}>
                 <Field className={s.textarea}
@@ -20,7 +24,6 @@ export const AddMessageForm = (props) => {
                     placeholder={"newPostMessage"}
                     validate={[required, maxLength30]}
                 />
-
                 <button className={s.button} type="submit">SEND</button>
 
             </div>
@@ -28,14 +31,16 @@ export const AddMessageForm = (props) => {
     );
 }
 
+export type PropsType = {
+    dialogsPage: Array<DialogsPageType>
+    messagesPage: Array<MessagesPageType>
+    addPost: (newPostMessage: string) => void
+}
 
+const Dialogs: React.FC<PropsType> = (props) => {
 
+    let onAddPost = (formData: NewMessageFormValuesType) => {
 
-const Dialogs = (props) => {
-
-
-    let onAddPost = (formData) => {
-        console.log(formData)
         props.addPost(formData.newPostMessage);
     }
 
@@ -59,7 +64,7 @@ const Dialogs = (props) => {
     );
 
 }
-const AddMessageReduxForm = reduxForm({ form: 'post' })(AddMessageForm)
+const AddMessageReduxForm = reduxForm<NewMessageFormValuesType>({ form: 'post' })(AddMessageForm)
 
 
 export default Dialogs;

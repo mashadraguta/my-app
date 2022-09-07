@@ -1,4 +1,5 @@
 import React from 'react';
+import ComponentTemplate from '../../HOC/ComponentTemplate';
 import s from './Settings.module.css';
 
 
@@ -6,7 +7,7 @@ const Settings = () => {
     return (
         <div>
             <ul className={s.list}>
-                <li><a href="">Some settings here</a></li>
+                <ComponentTemplate></ComponentTemplate>
 
             </ul>
         </div>

@@ -1,5 +1,6 @@
-import { Dispatch } from 'redux';
-const ADD_POST = 'ADD-POST';
+
+import { InferActionsTypes } from './reduxStore';
+
 
 export type DialogsPageType = {
     name: string
@@ -11,13 +12,8 @@ export type MessagesPageType = {
     text: string
 }
 
-type addPostCreatorType = {
-    type: typeof ADD_POST
-    newPostMessage: string
-}
+type ActionsTypes = InferActionsTypes<typeof actions>
 
-
-type ActionUsersType = addPostCreatorType
 
 
 let initialState = {
@@ -43,10 +39,11 @@ export type InitialStateType = typeof initialState
 
 
 
-const dialogsReducer = (state = initialState, action: ActionUsersType): InitialStateType => {
+const dialogsReducer = (state = initialState,
+    action: ActionsTypes): InitialStateType => {
 
     switch (action.type) {
-        case ADD_POST: {
+        case 'ADD-POST': {
 
             let obj = action.newPostMessage;
 
@@ -56,7 +53,6 @@ const dialogsReducer = (state = initialState, action: ActionUsersType): InitialS
                     { text: obj },
                     ...state.messagesPage],
             }
-
         }
 
         default:
@@ -65,12 +61,9 @@ const dialogsReducer = (state = initialState, action: ActionUsersType): InitialS
 }
 
 
+export const actions = {
+    addPost: (newPostMessage: string) => ({ type: 'ADD-POST', newPostMessage } as const)
 
-export const addPostCreator = (newPostMessage: string) => (dispatch: Dispatch<ActionUsersType>) => {
-    dispatch({
-        type: ADD_POST,
-        newPostMessage: newPostMessage
-    })
 }
 
 export default dialogsReducer;

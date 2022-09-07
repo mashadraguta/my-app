@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import s from '../Profile.module.css'
-import { ProfileContactsType, ProfileType, updateProfileThunkCreator } from '../../../redux/postsReducer';
+import { updateProfileThunkCreator } from '../../../redux/postsReducer';
 import { connect } from 'react-redux';
-import { RootStateType } from '../../../redux/reduxStore';
+import { PhotosType, ProfileContactsType, ProfileType } from '../../../types/types';
 
 type MapDispatchToPropsType = {
     updateProfileThunkCreator: (
-        //initialValues: initialValuesType,
-        profile: ProfileType,
+        profile: Omit<ProfileType, "photos">,
         setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void
-    ) => Promise<void>,
-    profile: ProfileType
-    onSubmit: () => Promise<void>
+    ) => Promise<void>
+    profile: Omit<ProfileType, "photos">
+    onSubmit: () => void
 }
 
 
@@ -21,6 +20,7 @@ export type initialValuesType = {
     lookingForAJobDescription: string
     fullName: string
     contacts: ProfileContactsType
+
 }
 
 type PropsType = initialValuesType & MapDispatchToPropsType

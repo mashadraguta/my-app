@@ -1,72 +1,65 @@
 
 
-import React, { Component } from 'react';
+import React, { Component, ComponentType } from 'react';
+import Profile from './Profile';
 import { connect } from 'react-redux';
 import {
     setProfileThunkCreator,
     setStatusThunkCreator,
     updateStatusThunkCreator,
     savedPhotoThunkCreator,
+
 } from '../../redux/postsReducer';
+import { WithAuthRedirect, withRouter } from '../../HOC/WithAuthRedirect';
 import { compose } from 'redux';
 import { RootStateType } from '../../redux/reduxStore';
-const { Profile } = require('./Profile');
-
-const { WithAuthRedirect, withRouter } = require('../../HOC/WithAuthRedirect');
 
 
+interface ParamsType {
+    userId: number
+}
 
 interface routerT {
     params: ParamsType
 }
-interface ParamsType {
-    userId: string
-
-}
-
-
 
 type MapStateToPropsType = {
     router: routerT
     isOwner: boolean
-    authorizedUserId: string
+    authorizedUserId: number
     userStatus: string
 
 }
-type MapDispatchToPropsType = {
-    setProfileThunkCreator: (userId: string) => void
-    setStatusThunkCreator: (userId: string) => void
-    updateStatusThunkCreator: () => void
+type MapDispatchToProps = {
+    setProfileThunkCreator: (userId: number) => void
+    setStatusThunkCreator: (userId: number) => void
     savedPhotoThunkCreator: () => void
+    updateStatusThunkCreator: () => void
 }
 
-
-
-
-type PropsType = MapStateToPropsType & MapDispatchToPropsType
-
-class ProfileContainer extends React.Component<PropsType> {
+class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatchToProps> {
 
     refreshProfile() {
-
         let userId = this.props.router.params.userId;
         if (!userId) {
             userId = this.props.authorizedUserId;
         }
+
         this.props.setProfileThunkCreator(userId);
         this.props.setStatusThunkCreator(userId);
 
     }
     componentDidMount() {
-        debugger
+
         this.refreshProfile();
 
     }
-    componentDidUpdate(prevProps: PropsType) {
+    componentDidUpdate(prevProps: MapStateToPropsType, prevState: RootStateType) {
 
         if (this.props.router.params.userId != prevProps.router.params.userId) {
             this.refreshProfile();
         }
+
     }
 
     render() {
@@ -75,7 +68,7 @@ class ProfileContainer extends React.Component<PropsType> {
 
             <div>
 
-                <Profile  {...this.props}
+                <Profile {...this.props}
                     userStatus={this.props.userStatus}
                     updateStatusThunkCreator={this.props.updateStatusThunkCreator}
                     isOwner={!this.props.router.params.userId}
@@ -99,9 +92,9 @@ let mapStateToProps = (state: RootStateType) => {
     })
 };
 
-export default compose<any>(
-    connect(
-        mapStateToProps,
+
+const ProfileContainerMain = compose<ComponentType>(
+    connect(mapStateToProps,
         {
             setProfileThunkCreator,
             setStatusThunkCreator,
@@ -111,61 +104,22 @@ export default compose<any>(
         }),
     withRouter,
     WithAuthRedirect,
-)(ProfileContainer);
+)(ProfileContainer)
 
 
+export default ProfileContainerMain
 
 
+// export default compose(
+//     connect(mapStateToProps,
+//         {
+//             setProfileThunkCreator,
+//             setStatusThunkCreator,
+//             updateStatusThunkCreator,
+//             savedPhotoThunkCreator,
 
+//         }),
+//     withRouter,
+//     WithAuthRedirect,
+// )(ProfileContainer);
 
-
-
-
-  // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-        //     .then(response => {
-        //         this.props.setUsersProfile(response.data);
-        //     })
-
-
-
-
-
-// function withRouter(ProfileContainer) {
-//     function AuthRedirectComponent(props) {
-//         let location = useLocation();
-//         let navigate = useNavigate();
-//         let params = useParams();
-//         if (!props.isAuth) {
-//             return <Navigate to="/login" />
-//         }
-//         return (
-
-//             <ProfileContainer
-//                 {...props}
-//                 router={{ location, navigate, params }}
-
-//             />
-//         );
-//     }
-
-//     return AuthRedirectComponent;
-// }
-
-
-
-
-
-
-
-//connect(mapStateToProps, { setProfileThunkCreator })(withRouter(ProfileContainer));
-
-
-
-
-
-   // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-        //     .then((response) => {
-
-        //         this.props.setUsersProfile(response.data);
-
-        //     })

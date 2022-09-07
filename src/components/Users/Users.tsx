@@ -2,11 +2,11 @@ import React from 'react';
 import s from './Users.module.css'
 //import userAva from '../images/image2.png'
 import { Link } from 'react-router-dom';
-import { UsersArrayType } from '../../redux/usersReducer';
 import Paginator from '../common/Paginator/Paginator';
+import { UsersType } from '../../types/types';
 
 const userAva = require('../images/image2.png');
-//const s = require('./Users.module.css');
+
 
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
     pageSize: number
     totalItemsCount: number
     currentPage?: number
-    users: Array<UsersArrayType>
+    users: Array<UsersType>
     followingInProgress: Array<number>
     unfollowThunkCreator: (id: number) => void
     followThunkCreator: (id: number) => void

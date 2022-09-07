@@ -4,12 +4,29 @@ import s from '../Profile.module.css';
 import image from '../../images/image2.png';
 import ProfileStatusWithHooks from '../ProfileStatus/ProfileStatusWithHooks';
 import UploadImage from '../../common/UploadImage/UploadImage.jsx';
-import background from '../../images/background.jpg';
+//import * as background from '../../images/background.jpg';
 import ProfileDataForm from './ProfileDataForm';
+import { ProfileContactsType, ProfileType } from '../../../types/types';
 
 
+const background = require('../../images/background.jpg');
 
-const Profileinfo = (props) => {
+type MapStateToProps = {
+    profile: ProfileType
+    goToEditMode?: () => void
+    isOwner: boolean
+    userStatus?: string
+}
+type MapDispachToProps = {
+    savedPhotoThunkCreator: (files: string | any[]) => void
+    updateStatusThunkCreator: () => void
+    onSubmit: () => Promise<void>
+
+}
+
+type PropsType = MapStateToProps & MapDispachToProps
+
+const Profileinfo: React.FC<PropsType> = (props) => {
 
     let [editMode, setEditMode] = useState(false);
 
@@ -18,7 +35,7 @@ const Profileinfo = (props) => {
         return <Preloader />
     }
 
-    const onMainPhotoSelected = (e) => {
+    const onMainPhotoSelected = (e: { target: { files: string | any[] } }) => {
         if (e.target.files.length) {
             props.savedPhotoThunkCreator(e.target.files[0])
         }
@@ -44,18 +61,30 @@ const Profileinfo = (props) => {
                 </div>
 
                 {editMode
-                    ? <ProfileDataForm profile={props.profile} saveChanges={props.saveChanges} onSubmit={onSubmit} />
+                    ? <ProfileDataForm profile={props.profile} onSubmit={onSubmit} aboutMe={''} fullName={''} lookingForAJobDescription={''} updateProfileThunkCreator={function (profile: Omit<ProfileType, 'photos'>, setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void): Promise<void> {
+                        throw new Error('Function not implemented.');
+                    }} contacts={{
+                        github: '',
+                        vk: '',
+                        facebook: '',
+                        instagram: '',
+                        twitter: '',
+                        website: '',
+                        youtube: '',
+                        mainLink: ''
+                    }} />
                     : <ProfileData profile={props.profile} isOwner={props.isOwner} goToEditMode={() => setEditMode(true)} />}
 
             </div>
-            <ProfileStatusWithHooks userStatus={props.userStatus} updateStatusThunkCreator={props.updateStatusThunkCreator} />
+            <ProfileStatusWithHooks userStatus={props.userStatus}
+                updateStatusThunkCreator={props.updateStatusThunkCreator} />
         </div>)
 
 }
 
 
 
-const ProfileData = (props) => {
+const ProfileData: React.FC<MapStateToProps> = (props) => {
     return (
         <div className={s.info__infos}>
             {props.isOwner && <div><button onClick={props.goToEditMode} className={s.button__edit}>Edit</button></div>}
@@ -68,7 +97,9 @@ const ProfileData = (props) => {
                 <div>{`Looking for a job : ${(props.profile.lookingForAJob)}`}</div>
                 <div className={s.contacts_wrapper}>
                     {Object.keys(props.profile.contacts).map(key => {
-                        return <Contacts key={key} contactTitle={key} contactValue={props.profile.contacts[key]} />
+                        return <Contacts key={key}
+                            contactTitle={key}
+                            contactValue={props.profile.contacts[key as keyof ProfileContactsType]} />
 
                     })}
                 </div>
@@ -77,7 +108,13 @@ const ProfileData = (props) => {
     );
 }
 
-const Contacts = ({ contactTitle, contactValue }) => {
+type ContactsType = {
+    contactTitle: string
+    contactValue: string
+}
+
+
+const Contacts: React.FC<ContactsType> = ({ contactTitle, contactValue }) => {
     return (
 
         <div>{contactTitle} : {contactValue}</div>
@@ -88,3 +125,7 @@ const Contacts = ({ contactTitle, contactValue }) => {
 
 
 export default Profileinfo;
+
+
+
+//saveChanges={props.saveChanges} 

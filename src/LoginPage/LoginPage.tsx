@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentType } from 'react';
 import s from './LoginPage.module.css';
 import { connect } from 'react-redux';
 import { logInThunkCreator, getCaptchaThunkCreator } from '../redux/authReducer'
@@ -10,15 +10,13 @@ import { RootStateType } from '../redux/reduxStore';
 const mapStateToProps = (state: RootStateType) => ({
     isAuth: state.auth.isAuth,
     captcha: state.auth.captcha,
-
 })
 
 type MapStateToPropsType = {
     isAuth: boolean
     captcha: string | null
-
-
 }
+
 type MapDispatchToPropsType = {
     logInThunkCreator: (
         email: string,
@@ -39,7 +37,9 @@ interface MyFormValues {
 
 type PropsType = MyFormValues & MapDispatchToPropsType & MapStateToPropsType
 
-const LoginPage = (props: PropsType) => {
+type FormValuesType = Extract<keyof MyFormValues,string>
+
+const LoginPage: React.FC<PropsType> = (props) => {
     if (props.isAuth) {
         return <Navigate to={"/profile"} />
     }
@@ -117,9 +117,11 @@ const LoginPageForm = (props: PropsType) => {
     </Formik >
 }
 
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, RootStateType>(mapStateToProps, { logInThunkCreator })(LoginPage);
 
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, null, RootStateType>(mapStateToProps, { logInThunkCreator })(LoginPage);
+
+//export default connect<MapStateToPropsType, MapDispatchToPropsType, null, RootStateType>(mapStateToProps, { logInThunkCreator })(LoginPage);
 
 
 

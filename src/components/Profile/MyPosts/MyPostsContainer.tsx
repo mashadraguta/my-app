@@ -1,29 +1,25 @@
 
-// import React from 'react';
-// import StoreContext from '../../../redux/StoreContext';
+import { Dispatch } from 'react';
 import { connect } from 'react-redux';
-import { actionAddPoetry } from '../../../redux/postsReducer';
+import { actions } from '../../../redux/postsReducer';
+import { RootStateType } from '../../../redux/reduxStore';
 import Myposts from './MyPosts';
 
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateType) => {
     return {
         posts: state.dialogs.posts,
-        newPoetry: state.dialogs.newPoetry,
+        newMess: state.dialogs.newMess,
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addPoetry: (newMess) => {
-            dispatch(actionAddPoetry(newMess))
-        },
-        
-    }
+
+type ActionPoetryType = {
+    actionAddPoetry: (newMess: string) => void
 }
 
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(Myposts);
+const MyPostsContainer = connect(mapStateToProps, { ...actions })(Myposts);
 
 export default MyPostsContainer;
 

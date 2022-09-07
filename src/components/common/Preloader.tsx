@@ -1,8 +1,8 @@
 import React from 'react';
-//const preloader = require('../images/preloader.svg');
+const preloader = require('../images/preloader.svg');
 
-type Props = {
-    isFetching: boolean
+export type Props = {
+    isFetching?: boolean
 
 }
 
@@ -10,7 +10,7 @@ const Preloader: React.FC<Props> = (props) => {
     return (
 
         <div>
-            {props.isFetching ? 'loading' : null}
+            {props.isFetching ? <img src={preloader} /> : null}
         </div>
 
     );

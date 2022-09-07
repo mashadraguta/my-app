@@ -1,65 +1,30 @@
 import { ThunkAction } from 'redux-thunk';
-import { RootStateType } from './reduxStore';
+import { InferActionsTypes, RootStateType } from './reduxStore';
 import { Dispatch } from 'redux';
-//import { profileAPI } from "../components/api/DAL";
-
-import { profileAPI } from "../components/api/DAL"
-
-
-export enum UserActionTypes {
-    ADD_POETRY = 'ADD-POETRY',
-    SET_PROFILE_USERS = 'SET-PROFILE-USERS',
-    SET_STATUS = 'SET-STATUS',
-    DELETE_POST = 'DELETE-POST',
-    SAVE_PHOTO_SUCCESS = 'SAVE-PHOTO-SUCCESS',
-    UPDATE_PROFILE_INFO = 'UPDATE-PROFILE-INFO',
-}
+import { profileAPI } from '../components/api/usersAPI';
+import { PhotosType, ProfileType } from '../types/types';
 
 
-type PostType = {
-    id: number
+
+export type PostType = {
+    id: string
     desc: string
-}
-
-type PhotosType = {
-    small: string | null
-    large: string | null
-}
-
-
-export type ProfileType = {
-    userId?: number
-    lookingForAJob?: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    contacts: ProfileContactsType
-    photos?: PhotosType
-}
-
-export type ProfileContactsType = {
-    github: string
-    vk: string
-    facebook: string
-    instagram: string
-    twitter: string
-    website: string
-    youtube: string
-    mainLink: string
 }
 
 let initialState = {
     posts: [
-        { id: 1, desc: 'Eu nu strivesc corola de minuni a lumii şi nu ucid' },
-        { id: 2, desc: 'cu mintea tainele ce-mi ies in cale' },
-        { id: 3, desc: 'în flori, în ochi, pe buze ori morminte.' },
-        { id: 4, desc: 'Lumina altora sugrumă vraja nepătrunsului ascuns' },
-        { id: 5, desc: 'eu cu lumina mea sporesc a lumii taină -' },
-        { id: 6, desc: 'şi-ntocmai cum cu razele ei albe luna' },
+        { id: '1', desc: 'Eu nu strivesc corola de minuni a lumii şi nu ucid' },
+        { id: '2', desc: 'cu mintea tainele ce-mi ies in cale' },
+        { id: '3', desc: 'în flori, în ochi, pe buze ori morminte.' },
+        { id: '4', desc: 'Lumina altora sugrumă vraja nepătrunsului ascuns' },
+        { id: ' 5', desc: 'eu cu lumina mea sporesc a lumii taină -' },
+        { id: ' 6', desc: 'şi-ntocmai cum cu razele ei albe luna' },
 
     ] as Array<PostType>,
 
     profile: null as ProfileType | null,
     userStatus: "",
+    newMess: "",
 };
 
 export type InitialStateType = typeof initialState;
@@ -67,22 +32,22 @@ export type InitialStateType = typeof initialState;
 const postsReducer = (state = initialState, action: any): InitialStateType => {
 
     switch (action.type) {
-        case UserActionTypes.ADD_POETRY: {
+        case 'ADD_POETRY': {
 
             let obj2 = action.newMess;
             return {
                 ...state,
-                posts: [...state.posts, { id: Math.random(), desc: obj2 }],
+                posts: [...state.posts, { id: '9', desc: obj2 }],
             }
         }
-        case UserActionTypes.SET_PROFILE_USERS: {
+        case 'SET_PROFILE_USERS': {
             return {
                 ...state,
                 profile: action.profile,
 
             }
         }
-        case UserActionTypes.SET_STATUS: {
+        case 'SET_STATUS': {
             return {
                 ...state,
                 userStatus: action.userStatus,
@@ -90,14 +55,14 @@ const postsReducer = (state = initialState, action: any): InitialStateType => {
             }
 
         }
-        case UserActionTypes.DELETE_POST: {
+        case 'DELETE_POST': {
             return {
                 ...state,
                 posts: state.posts.filter(item => item.id != action.id),
 
             }
         }
-        case UserActionTypes.SAVE_PHOTO_SUCCESS: {
+        case 'SAVE_PHOTO_SUCCESS': {
             return {
                 ...state,
                 profile: { ...state.profile, photos: action.photos } as ProfileType,
@@ -110,76 +75,32 @@ const postsReducer = (state = initialState, action: any): InitialStateType => {
     }
 }
 
-
-type ActionAddPoetryCreator = {
-    type: UserActionTypes.ADD_POETRY
-    newMess: string
-}
-
-type SetUsersProfile = {
-    type: UserActionTypes.SET_PROFILE_USERS
-    profile: ProfileType
-}
-type SetUsersStatus = {
-    type: UserActionTypes.SET_STATUS
-    userStatus: string
-}
-type SavePhotoSuccess = {
-    type: UserActionTypes.SAVE_PHOTO_SUCCESS
-    photos: PhotosType
-}
-type SetProfileUsers = {
-    type: UserActionTypes.SET_PROFILE_USERS
-    userId: number
-}
-type DeletePost = {
-    type: UserActionTypes.DELETE_POST
-    id?: number
-}
-
 type GetStateType = () => RootStateType
+type ThunkType = ThunkAction<void, RootStateType, unknown, ActionUsersType>
+export type ActionUsersType = InferActionsTypes<typeof actions>
 
-
-export type ActionUsersType = SavePhotoSuccess | SetUsersStatus |
-    SetUsersProfile | ActionAddPoetryCreator | SetProfileUsers | DeletePost
-
-type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, ActionUsersType>
-
-export const actionAddPoetryCreator = (newMess: string): ActionAddPoetryCreator => ({ type: UserActionTypes.ADD_POETRY, newMess })
-export const setUsersProfile = (profile: ProfileType): SetUsersProfile => ({ type: UserActionTypes.SET_PROFILE_USERS, profile })
-export const setUsersStatus = (userStatus: string): SetUsersStatus => ({ type: UserActionTypes.SET_STATUS, userStatus })
-export const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccess => ({ type: UserActionTypes.SAVE_PHOTO_SUCCESS, photos })
-export const setProfileThunk = (userId: number): SetProfileUsers => ({ type: UserActionTypes.SET_PROFILE_USERS, userId })
-
-
-
-export const actionAddPoetry = (newMess: string) => (dispatch: Dispatch<ActionUsersType>) => {
-    dispatch({
-        type: UserActionTypes.ADD_POETRY,
-        newMess: newMess,
-    })
-}
-export const actionDeletePoetry = (id: number) => (dispatch: Dispatch<ActionUsersType>) => {
-    dispatch({
-        type: UserActionTypes.DELETE_POST,
-    })
+export const actions = {
+    actionAddPoetryCreator: (newMess: string) => ({ type: "ADD_POETRY", newMess } as const),
+    setUsersProfile: (profile: ProfileType) => ({ type: "SET_PROFILE_USERS", profile } as const),
+    setUsersStatus: (userStatus: string) => ({ type: "SET_STATUS", userStatus } as const),
+    savePhotoSuccess: (photos: PhotosType) => ({ type: "SAVE_PHOTO_SUCCESS", photos } as const),
+    setProfileThunk: (userId: number) => ({ type: "SET_PROFILE_USERS", userId } as const),
+    actionDeletePost: (postId: number) => ({ type: 'SN/PROFILE/DELETE_POST', postId } as const),
 }
 
-export const setProfileThunkCreator = (userId: number) => {
-    return async (dispatch: Dispatch<ActionUsersType>) => {
+export const actionAddPoetry = (newMess: string): ThunkType => (dispatch) => {
+    dispatch(actions.actionAddPoetryCreator(newMess))
+}
 
-        profileAPI.getUsersProfile(userId).then((response) => {
-
-            dispatch(setUsersProfile(response.data));
-
-        })
-
-    }
+export const setProfileThunkCreator = (userId: number): ThunkType => async (dispatch) => {
+    const data = await profileAPI.getUsersProfile(userId)
+    dispatch(actions.setUsersProfile(data))
 }
 
 
-export const updateProfileThunkCreator = (profile: ProfileType, setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void) => {
-    return async (dispatch: Dispatch<ActionUsersType>, getState: GetStateType) => {
+export const updateProfileThunkCreator = (profile: ProfileType,
+    setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void): ThunkType => {
+    return async (dispatch, getState) => {
         const userId = getState().auth.id
         const response = await profileAPI.updateUserProfile(profile)
         if (response.data.resultCode === 0) {
@@ -211,30 +132,28 @@ export const updateProfileThunkCreator = (profile: ProfileType, setFieldValue: (
 
 }
 
+export const setStatusThunkCreator = (userId: number): ThunkType => async (dispatch) => {
+    const data = await profileAPI.getUsersStatus(userId)
+    dispatch(actions.setUsersStatus(data));
 
+}
+export const updateStatusThunkCreator = (userStatus: string): ThunkType => (dispatch) => {
 
-export const setStatusThunkCreator = (userId: number) => (dispatch: Dispatch<ActionUsersType>) => {
-
-    profileAPI.getUsersStatus(userId).then((response: any) => {
-
-        dispatch(setUsersStatus(response.data));
+    profileAPI.updateUsersStatus(userStatus).then((response) => {
+        if (response.data.resultCode === 0) {
+            dispatch(actions.setUsersStatus(userStatus))
+        }
     })
 }
-export const updateStatusThunkCreator = (userStatus: string) => (dispatch: Dispatch<ActionUsersType>) => {
 
-    profileAPI.updateUsersStatus(userStatus).then((response: any) => {
-        if (response.data.resultCode === 0) { dispatch(setUsersStatus(userStatus)) }
-    })
+
+export const savedPhotoThunkCreator = (file: any): ThunkType => async (dispatch) => {
+    const data = await profileAPI.savePhoto(file)
+    if (data.resultCode === 0) {
+        dispatch(actions.savePhotoSuccess(data.data.photos))
+    }
 }
 
-
-export const savedPhotoThunkCreator = (file: any) => (dispatch: Dispatch<ActionUsersType>) => {
-
-
-    profileAPI.savePhoto(file).then((response: any) => {
-        if (response.data.resultCode === 0) { dispatch(savePhotoSuccess(response.data.data.photos)) }
-    })
-}
 
 
 

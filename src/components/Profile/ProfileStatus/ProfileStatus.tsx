@@ -43,8 +43,6 @@ class ProfileStatus extends Component<PropsType, StateType> {
         this.setState({
             userStatus: e.currentTarget.value,
         })
-
-
     }
 
     componentDidUpdate = (prevProps: PropsType, prevState: StateType) => {
