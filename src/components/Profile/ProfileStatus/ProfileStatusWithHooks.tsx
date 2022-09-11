@@ -15,6 +15,7 @@ const SpanHover = () => {
 }
 
 
+<<<<<<< HEAD
 type MapDispachToProps = {
     updateStatusThunkCreator: (userStatus: string | undefined) => void
 
@@ -30,6 +31,18 @@ type PropsType = MapDispachToProps & MapStateToProps
 
 
 const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
+=======
+type MapStateToPropsType ={
+    userStatus:string | undefined
+}
+type MapDispatchToPropsType ={
+    updateStatusThunkCreator : (userStatus:string | undefined) => void
+}
+type PropsType =MapStateToPropsType & MapDispatchToPropsType
+
+
+const ProfileStatusWithHooks:React.FC<PropsType> = (props) => {
+>>>>>>> fab68f98e8073160a8e60b2b6eb4eec72bb4602d
 
     let [editMode, setEditMode] = useState(false);
     let [userStatus, setStatus] = useState(props.userStatus);
@@ -47,7 +60,11 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
         setEditMode(false);
         props.updateStatusThunkCreator(userStatus);
     }
+<<<<<<< HEAD
     const onStatusChange = (e: { currentTarget: { value: React.SetStateAction<string | undefined> } }) => {
+=======
+    const onStatusChange = (e: { currentTarget: { value: any; }; }) => {
+>>>>>>> fab68f98e8073160a8e60b2b6eb4eec72bb4602d
         setStatus(e.currentTarget.value);
     }
 
@@ -61,7 +78,7 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
                         <div className={s.container}>
                             <span className={s.spanHoverComp}>doubleclick to change status</span>
                         </div>
-                        <div className={s.statusHover}>{props.userStatus || "no more crying in the rain"}</div>
+                        <div className={s.statusHover}>{props.userStatus || "the rain"}</div>
                     </div>
 
                 </div>
