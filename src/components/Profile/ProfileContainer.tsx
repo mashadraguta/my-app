@@ -13,6 +13,7 @@ import {
 import { WithAuthRedirect, withRouter } from '../../HOC/WithAuthRedirect';
 import { compose } from 'redux';
 import { RootStateType } from '../../redux/reduxStore';
+import { ProfileType } from '../../types/types';
 
 
 interface ParamsType {
@@ -28,6 +29,7 @@ type MapStateToPropsType = {
     isOwner: boolean
     authorizedUserId: number
     userStatus: string
+    profile: ProfileType
 
 }
 type MapDispatchToProps = {

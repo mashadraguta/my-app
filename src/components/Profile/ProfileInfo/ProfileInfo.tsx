@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, useState } from 'react';
 import Preloader from '../../common/Preloader';
 import s from '../Profile.module.css';
 import image from '../../images/image2.png';
 import ProfileStatusWithHooks from '../ProfileStatus/ProfileStatusWithHooks';
-import UploadImage from '../../common/UploadImage/UploadImage.jsx';
+import UploadImage from '../../common/UploadImage/UploadImage';
 //import * as background from '../../images/background.jpg';
 import ProfileDataForm from './ProfileDataForm';
 import { ProfileContactsType, ProfileType } from '../../../types/types';
@@ -18,14 +18,24 @@ type MapStateToProps = {
     userStatus?: string
 }
 type MapDispachToProps = {
-    savedPhotoThunkCreator: (files: string | any[]) => void
+    savedPhotoThunkCreator: (files: File) => void
     updateStatusThunkCreator: () => void
-    onSubmit: () => Promise<void>
+    onSubmit?: () => Promise<void>
+    onMainPhotoSelected?: () => void
 
 }
 
 type PropsType = MapStateToProps & MapDispachToProps
 
+
+// document.getElementById("customimage").onchange= function(e: Event) {
+//     let file = (<HTMLInputElement>e.target).files[0];
+
+// }
+
+
+// Argument of type 'File' is not assignable to parameter of type 'FileList'.
+//   Type 'File' is missing the following properties from type 'FileList': length, item, [Symbol.iterator]t
 const Profileinfo: React.FC<PropsType> = (props) => {
 
     let [editMode, setEditMode] = useState(false);
@@ -35,8 +45,8 @@ const Profileinfo: React.FC<PropsType> = (props) => {
         return <Preloader />
     }
 
-    const onMainPhotoSelected = (e: { target: { files: string | any[] } }) => {
-        if (e.target.files.length) {
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target?.files?.length) {
             props.savedPhotoThunkCreator(e.target.files[0])
         }
     }
@@ -61,18 +71,21 @@ const Profileinfo: React.FC<PropsType> = (props) => {
                 </div>
 
                 {editMode
-                    ? <ProfileDataForm profile={props.profile} onSubmit={onSubmit} aboutMe={''} fullName={''} lookingForAJobDescription={''} updateProfileThunkCreator={function (profile: Omit<ProfileType, 'photos'>, setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void): Promise<void> {
-                        throw new Error('Function not implemented.');
-                    }} contacts={{
-                        github: '',
-                        vk: '',
-                        facebook: '',
-                        instagram: '',
-                        twitter: '',
-                        website: '',
-                        youtube: '',
-                        mainLink: ''
-                    }} />
+                    ? <ProfileDataForm profile={props.profile}
+                        onSubmit={onSubmit} aboutMe={''} fullName={''}
+                        lookingForAJobDescription={''}
+                        updateProfileThunkCreator={function (profile: Omit<ProfileType, 'photos'>, setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void): Promise<void> {
+                            throw new Error('Function not implemented.');
+                        }} contacts={{
+                            github: '',
+                            vk: '',
+                            facebook: '',
+                            instagram: '',
+                            twitter: '',
+                            website: '',
+                            youtube: '',
+                            mainLink: ''
+                        }} />
                     : <ProfileData profile={props.profile} isOwner={props.isOwner} goToEditMode={() => setEditMode(true)} />}
 
             </div>

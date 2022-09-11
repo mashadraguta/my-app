@@ -3,7 +3,7 @@ import { Formik, Field, Form } from 'formik';
 import s from '../Profile.module.css'
 import { updateProfileThunkCreator } from '../../../redux/postsReducer';
 import { connect } from 'react-redux';
-import { PhotosType, ProfileContactsType, ProfileType } from '../../../types/types';
+import {  ProfileContactsType, ProfileType } from '../../../types/types';
 
 type MapDispatchToPropsType = {
     updateProfileThunkCreator: (
@@ -54,8 +54,6 @@ const ProfileDataForm = (props: PropsType) => {
             );
 
         }}>
-
-
         {({ initialValues, errors }) => (
 
             <Form className={s.infos}>
@@ -78,12 +76,8 @@ const ProfileDataForm = (props: PropsType) => {
                             <Field name={"contacts." + key} type="text" />
                         </div>
                     })}
-
-
                 </div>
-
             </Form>
-
         )}
     </Formik >
 

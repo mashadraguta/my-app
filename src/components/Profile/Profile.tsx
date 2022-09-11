@@ -1,11 +1,24 @@
 import React from 'react';
+import { ProfileType } from '../../types/types';
 
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import Profileinfo from './ProfileInfo/ProfileInfo';
 
+type MapStateToProps = {
+  profile: ProfileType
+  userStatus: string | undefined
+  isOwner: boolean
+
+}
+type MapDispatchToProps = {
+  updateStatusThunkCreator: () => void
+  savedPhotoThunkCreator: (files: File) => void
+}
 
 
-const Profile = (props) => {
+type PropsType = MapStateToProps & MapDispatchToProps
+
+const Profile: React.FC<PropsType> = (props) => {
 
   return (
 

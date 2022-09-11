@@ -14,7 +14,22 @@ const SpanHover = () => {
     );
 }
 
-const ProfileStatusWithHooks = (props) => {
+
+type MapDispachToProps = {
+    updateStatusThunkCreator: (userStatus: string | undefined) => void
+
+}
+type MapStateToProps = {
+    userStatus: string | undefined
+
+}
+
+
+
+type PropsType = MapDispachToProps & MapStateToProps
+
+
+const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
 
     let [editMode, setEditMode] = useState(false);
     let [userStatus, setStatus] = useState(props.userStatus);
@@ -32,7 +47,7 @@ const ProfileStatusWithHooks = (props) => {
         setEditMode(false);
         props.updateStatusThunkCreator(userStatus);
     }
-    const onStatusChange = (e) => {
+    const onStatusChange = (e: { currentTarget: { value: React.SetStateAction<string | undefined> } }) => {
         setStatus(e.currentTarget.value);
     }
 
