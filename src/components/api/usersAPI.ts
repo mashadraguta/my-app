@@ -19,6 +19,8 @@ export type GetItemsType = {
 }
 
 
+
+
 export const profileAPI = {
     getUsersStatus(userId: number) {
         return instance.get<string>(`profile/status/${userId}`).then(res => res.data)
@@ -56,9 +58,9 @@ export const profileAPI = {
 }
 
 export const getUsersAPI = {
-    getUsers(currentPage = 1, pageSize: number) {
+    getUsers(currentPage = 1, pageSize: number, term: string = "", friend: null | boolean = null) {
 
-        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}`)
+        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}&term=${term}`)
             .then(response => response.data)
 
     },

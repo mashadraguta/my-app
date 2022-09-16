@@ -95,3 +95,38 @@
     font-style: italic;
 }
 
+.btn_Search {
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgb(27 31 35 / 4%) 0 1px 0, rgb(255 255 255 / 25%) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.btn_Search:hover {
+    background-color: #24292E;
+    color: #FAFBFC;
+    text-decoration: none;
+    transition-duration: 0.1s;
+}
+
+.formSearch {
+    display: flex;
+    align-items: center;
+}
+
+.input_Search {
+    padding: 25px;
+}

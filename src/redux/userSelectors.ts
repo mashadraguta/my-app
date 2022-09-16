@@ -7,6 +7,7 @@ const getUsersSelector = (state: RootStateType) => {
     return state.users.users
 }
 
+
 export const getUsers = createSelector(getUsersSelector,
     (users) => { return users.filter(user => user) }
 );
@@ -16,6 +17,9 @@ export const getPageSize = (state: RootStateType) => {
 }
 export const getTotalCount = (state: RootStateType) => {
     return state.users.totalItemsCount
+}
+export const getFilter = (state: RootStateType) => {
+    return state.users.filter
 }
 export const getCurrentPage = (state: RootStateType) => {
     return state.users.currentPage

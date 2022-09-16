@@ -1,17 +1,17 @@
 import React from 'react';
 import s from './Users.module.css'
-//import userAva from '../images/image2.png'
 import { Link } from 'react-router-dom';
 import Paginator from '../common/Paginator/Paginator';
 import { UsersType } from '../../types/types';
-
+import UserFormSearch from './UserFormSearch';
+import { FilterType } from '../../redux/usersReducer';
 const userAva = require('../images/image2.png');
-
 
 
 type Props = {
 
     onPageChanged: (selectedPage: number) => void
+    onFilterChanged:(filter: FilterType) => void
     pageSize: number
     totalItemsCount: number
     currentPage?: number
@@ -19,6 +19,7 @@ type Props = {
     followingInProgress: Array<number>
     unfollowThunkCreator: (id: number) => void
     followThunkCreator: (id: number) => void
+
 }
 
 
@@ -28,7 +29,7 @@ const Users: React.FC<Props> = (props) => {
     return (
 
         <div>
-
+            <UserFormSearch onFilterChanged={props.onFilterChanged} />
             <Paginator currentPage={props.currentPage}
                 onPageChanged={props.onPageChanged}
                 totalItemsCount={props.totalItemsCount}
@@ -61,16 +62,10 @@ const Users: React.FC<Props> = (props) => {
                                 }
                             </div>
                         </div>
-
-
                         <div className={s.item__message}>
-
                             <div className={s.item__message_flex}>
                                 <div className={s.item__author}>{item.name}</div>
-
                             </div>
-
-
                         </div>
                     </div>
                 </div>
