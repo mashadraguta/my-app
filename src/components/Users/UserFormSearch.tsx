@@ -1,8 +1,9 @@
 import React from 'react';
-import { Field, Formik, FormikValues } from 'formik';
+import { Field, Formik, FormikValues, Form } from 'formik';
 import s from './Users.module.css'
 import { FilterType } from '../../redux/usersReducer';
 
+//@ts ignore
 const validateForm = (values: FormikValues) => {
 
     const errors = {}
@@ -15,50 +16,42 @@ type PropsType = {
 }
 
 const UserFormSearch: React.FC<PropsType> = (props) => {
-    return (
-        <div>
-            <Formik
-                initialValues={{ term: '' }}
-                validate={validateForm}
-                onSubmit={(values, { setSubmitting }) => {
-                    props.onFilterChanged(values)
-                }}
-            >
-                {({
-                    values,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    isSubmitting,
+    return <Formik
+        initialValues={{
+            term: '',
+            friend: ''
+        }}
+        validate={validateForm}
+        onSubmit={(initialValues: FilterType, { setSubmitting }) => {
 
-                }) => (
-                    <form onSubmit={handleSubmit}>
+            props.onFilterChanged(initialValues)
+            setSubmitting(false)
+        }}
+    >
+        {({
+            initialValues,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
 
-                        <div className={s.formSearch}>
-                            <input
-                                type="text"
-                                name="term"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.term}
-                                className={s.input_Search}
-                            />
-
-                            <Field name="friend" as="select">
-                                <option value="all">all</option>
-                                <option value="followed">followed</option>
-                                <option value="unfollowed">unfollowed</option>
-
-                            </Field>
-                            <button type="submit" disabled={isSubmitting} className={s.btn_Search}>
-                                Search
-                            </button>
-                        </div>
-                    </form>
-                )}
-            </Formik>
-        </div>
-    )
+        }) => (
+            <Form>
+                <div className={s.formSearch}>
+                    <Field name="term" type="text" />
+                    <Field name="friend" as="select" >
+                        <option value="null">all</option>
+                        <option value="true">followed</option>
+                        <option value="false">unfollowed</option>
+                    </Field >
+                    <button type="submit" disabled={isSubmitting} className={s.btn_Search}>
+                        Search
+                    </button>
+                </div>
+            </Form>
+        )}
+    </Formik>
 }
 
 export default UserFormSearch
+

@@ -5,11 +5,11 @@
 }
 
 .header__logo {
-    display: block;
-
-    justify-content: center;
-    text-align: center;
+    display: flex;
+    justify-content: flex-start;
     position: relative;
+    margin: 3vh;
+
 }
 
 .header__logo img {
@@ -17,6 +17,7 @@
     height: 80px;
     border-radius: 50%;
     text-align: center;
+    object-fit: cover;
 }
 
 
@@ -24,7 +25,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    margin: 10px;
+    margin: 3vh;
 }
 
 .botton {

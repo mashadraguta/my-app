@@ -78,8 +78,6 @@ const LoginPageForm = (props: PropsType) => {
             let email = initialValues.email;
             let password = initialValues.password;
             let captcha = initialValues.captcha;
-
-
             props.logInThunkCreator(email, password, captcha, setFieldValue);
 
         }}>

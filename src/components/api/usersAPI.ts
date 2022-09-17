@@ -58,10 +58,9 @@ export const profileAPI = {
 }
 
 export const getUsersAPI = {
-    getUsers(currentPage = 1, pageSize: number, term: string = "", friend: null | boolean = null) {
+    getUsers(currentPage = 1, pageSize: number, term: string = "", friend: string | boolean = '') {
 
-        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}&term=${term}`)
-            .then(response => response.data)
+        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === '' ? `` : `&friend=${friend}`)).then(response => response.data)
 
     },
 }

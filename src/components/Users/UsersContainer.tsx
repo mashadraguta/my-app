@@ -46,15 +46,18 @@ class UsersContainer extends Component<PropsType> {
 
     componentDidMount() {
 
-        this.props.getUserThunkCreator(this.props.currentPage,
-            this.props.pageSize, "");
+        const { currentPage, pageSize, filter } = this.props
+        this.props.getUserThunkCreator(currentPage, pageSize, filter);
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUserThunkCreator(pageNumber, this.props.pageSize, this.props.filter.term)
+        const { pageSize, filter } = this.props
+        this.props.getUserThunkCreator(pageNumber, pageSize, filter)
     }
     onFilterChanged = (filter: FilterType) => {
-        this.props.getUserThunkCreator(this.props.currentPage, this.props.pageSize, filter.term)
+
+        const {  pageSize } = this.props
+        this.props.getUserThunkCreator(1, pageSize, filter)
     }
 
     render() {

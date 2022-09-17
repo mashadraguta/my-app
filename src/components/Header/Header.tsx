@@ -1,27 +1,27 @@
 import React from 'react';
 import s from './Header.module.css';
 import { NavLink } from 'react-router-dom';
+import image from '../images/img2.jpg'
 
 
-
-export type MapStateToPropsType={
-    email:string | null
-    isAuth:boolean
+export type MapStateToPropsType = {
+    email: string | null
+    isAuth: boolean
 }
-export type MapDispatchToPropsType={
+export type MapDispatchToPropsType = {
     logOutThunkCreator: () => void
-    
+
 }
-export type PropsType= MapStateToPropsType & MapDispatchToPropsType 
+export type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
 
-const Header:React.FC<PropsType>= (props) => {
+const Header: React.FC<PropsType> = (props) => {
 
     return (
 
         <div className={s.header}>
             <div className={s.header__logo}>
-                <img src='./img/00.jpg'></img>
+                <img src={image} alt="logo-image" />
 
                 <div className={s.login}>
 

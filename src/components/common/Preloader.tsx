@@ -1,5 +1,5 @@
 import React from 'react';
-const preloader = require('../images/preloader.svg');
+import preloader from '../images/preloader.svg';
 
 export type Props = {
     isFetching?: boolean

@@ -14,7 +14,7 @@ let initialState = {
     usersId: '',
     filter: {
         term: '',
-        friend: null as null | boolean
+        friend: '' as string | boolean
     }
 };
 
@@ -118,7 +118,8 @@ export const getUserThunkCreator = (page: number,
         dispatch(actions.toggleFetching(true));
         dispatch(actions.setCurrentPage(page));
         dispatch(actions.setFilter(filter));
-        let data = await getUsersAPI.getUsers(page, pageSize, filter.term);
+
+        let data = await getUsersAPI.getUsers(page, pageSize, filter.term, filter.friend);
         dispatch(actions.toggleFetching(false));
         dispatch(actions.setUsers(data.items));
         dispatch(actions.setTotalCount(data.totalCount));
