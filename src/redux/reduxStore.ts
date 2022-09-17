@@ -34,6 +34,8 @@ export type InferActionsTypes<T extends { [key: string]: (...args: any) => any }
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
+export type AppDispatch = typeof store.dispatch
+
 // @ts-ignore
 window.__store__ = store
 

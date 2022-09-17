@@ -8,7 +8,7 @@ import UsersContainer from './components/Users/UsersContainer';
 //import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import { initialized } from './redux/appReducer';
-import LoginPage from './LoginPage/LoginPage';
+import { LoginPage } from './LoginPage/LoginPage';
 import { connect } from 'react-redux';
 import { withRouter } from './HOC/WithAuthRedirect';
 import { compose } from 'redux';
@@ -52,8 +52,8 @@ class App extends Component<MapStateToProps & MapDispatchToProps> {
               < Route path='/news' element={< Friends />} />
               < Route path='/settings' element={< Settings />} />
               < Route path='/users' element={< UsersContainer title={'SW'} />} />
-              < Route path='/auth' element={< LoginPage email={''} password={''} general={''} />} />
-              < Route path='/login' element={< LoginPage email={''} password={''} general={''} />} />
+              < Route path='/auth' element={< LoginPage />} />
+              < Route path='/login' element={< LoginPage />} />
             </Routes>
           </Suspense>
         </div>

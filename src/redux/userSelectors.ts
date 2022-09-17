@@ -8,10 +8,13 @@ const getUsersSelector = (state: RootStateType) => {
 }
 
 
-export const getUsers = createSelector(getUsersSelector,
-    (users) => { return users.filter(user => user) }
-);
+// export const getUsers = createSelector(getUsersSelector,
+//     (users) => { return users.filter(user => user) }
+// );
 
+export const getUsers = (state: RootStateType) => {
+    return state.users.users
+}
 export const getPageSize = (state: RootStateType) => {
     return state.users.pageSize
 }

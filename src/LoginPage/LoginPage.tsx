@@ -5,48 +5,26 @@ import { logInThunkCreator, getCaptchaThunkCreator } from '../redux/authReducer'
 import { Navigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { RootStateType } from '../redux/reduxStore';
+import { AppDispatch, RootStateType } from '../redux/reduxStore';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-const mapStateToProps = (state: RootStateType) => ({
-    isAuth: state.auth.isAuth,
-    captcha: state.auth.captcha,
-})
 
-type MapStateToPropsType = {
-    isAuth: boolean
-    captcha: string | null
-}
 
-type MapDispatchToPropsType = {
-    logInThunkCreator: (
-        email: string,
-        password: string,
-        captcha: string,
-        setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void
-    ) => void
-}
+type PropsType = {}
 
-interface MyFormValues {
-    email: string
-    password: string
-    general: string
-    captcha: string | null
-    rememberMe?: boolean
 
-}
+export const LoginPage: React.FC<PropsType> = () => {
+    const isAuth = useSelector((state: RootStateType) => state.auth.isAuth)
+    const captcha = useSelector((state: RootStateType) => state.auth.captcha)
 
-type PropsType = MyFormValues & MapDispatchToPropsType & MapStateToPropsType
-
-type FormValuesType = Extract<keyof MyFormValues,string>
-
-const LoginPage: React.FC<PropsType> = (props) => {
-    if (props.isAuth) {
+    if (isAuth) {
         return <Navigate to={"/profile"} />
     }
     return (
 
         <div>
-            <LoginPageForm {...props} captcha={props.captcha} />
+            <LoginPageForm captcha={captcha} />
         </div>
     );
 }
@@ -61,7 +39,12 @@ const SignupSchema = Yup.object().shape({
 });
 
 
-const LoginPageForm = (props: PropsType) => {
+type LoginPageFormT = { captcha: string | null }
+
+
+
+const LoginPageForm = (props: LoginPageFormT) => {
+    const dispatch: AppDispatch = useDispatch()
 
     return <Formik
 
@@ -74,12 +57,10 @@ const LoginPageForm = (props: PropsType) => {
         }}
         validationSchema={SignupSchema}
         onSubmit={(initialValues, { setFieldValue }) => {
-
             let email = initialValues.email;
             let password = initialValues.password;
             let captcha = initialValues.captcha;
-            props.logInThunkCreator(email, password, captcha, setFieldValue);
-
+            dispatch(logInThunkCreator(email, password, captcha, setFieldValue))
         }}>
 
         {({ isSubmitting, errors, touched, initialValues }) => (
@@ -115,7 +96,7 @@ const LoginPageForm = (props: PropsType) => {
     </Formik >
 }
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, RootStateType>(mapStateToProps, { logInThunkCreator })(LoginPage);
+//export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, RootStateType>(mapStateToProps, { logInThunkCreator })(LoginPage);
 
 
 
