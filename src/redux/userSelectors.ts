@@ -1,16 +1,8 @@
 
-import { createSelector } from 'reselect';
+
 import { RootStateType } from './reduxStore';
 
 
-const getUsersSelector = (state: RootStateType) => {
-    return state.users.users
-}
-
-
-// export const getUsers = createSelector(getUsersSelector,
-//     (users) => { return users.filter(user => user) }
-// );
 
 export const getUsers = (state: RootStateType) => {
     return state.users.users

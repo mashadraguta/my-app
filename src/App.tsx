@@ -3,9 +3,8 @@ import './App.css';
 import NavBar from './components/Nav/Nav';
 import Friends from './components/Friends/Friends';
 import Settings from './components/Settings/Settings';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
-//import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import { initialized } from './redux/appReducer';
 import { LoginPage } from './LoginPage/LoginPage';
@@ -14,7 +13,6 @@ import { withRouter } from './HOC/WithAuthRedirect';
 import { compose } from 'redux';
 import store, { RootStateType } from './redux/reduxStore';
 import { Provider } from 'react-redux';
-import { PropsType } from './components/Dialogs/Dialogs';
 import Preloader from './components/common/Preloader';
 import ProfileContainerMain from './components/Profile/ProfileContainer';
 

@@ -1,26 +1,26 @@
-
-import React from 'react';
-import Users from './Users';
-import Preloader from '../common/Preloader';
-import { useSelector } from 'react-redux';
-import { getIsFetching } from '../../redux/userSelectors';
+import React from "react";
+import Users from "./Users";
+import Preloader from "../common/Preloader";
+import { useSelector } from "react-redux";
+import { getIsFetching } from "../../redux/userSelectors";
 
 type PropsTypeTwo = {
-    title: string
-}
+  title: string;
+};
 
 const UserContainerMain: React.FC<PropsTypeTwo> = (props) => {
-    const isFetching = useSelector(getIsFetching)
-    return <div>
-        <h1>{props.title}</h1>
-        {isFetching ? <Preloader /> : ''}
-        <Users />
+  const isFetching = useSelector(getIsFetching);
+
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      {isFetching ? <Preloader /> : ""}
+      <Users />
     </div>
-}
+  );
+};
 
-
-export default UserContainerMain
-
+export default UserContainerMain;
 
 // type MapStateToPropsType = {
 //     currentPage: number
@@ -41,7 +41,6 @@ export default UserContainerMain
 // type OwnPropsType = {
 //     title?: string
 // }
-
 
 // class UsersContainer extends Component<PropsType> {
 
@@ -80,7 +79,6 @@ export default UserContainerMain
 //         </div>
 //     }
 // }
-
 
 // const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
 
