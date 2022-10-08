@@ -10,8 +10,10 @@ import dialogsReducer from "./dialogsReducer";
 import postsReducer from "./postsReducer";
 import sideBarReducer from "./sideBarReducer";
 import usersReducer from "./usersReducer";
+import  chatReducer  from "./chatReducer";
 import { reducer as formReducer } from 'redux-form'
 import appReducer from "./appReducer";
+
 
 
 let rootReducer = combineReducers({
@@ -22,6 +24,7 @@ let rootReducer = combineReducers({
     auth: authReducer,
     form: formReducer,
     app: appReducer,
+    chat:chatReducer,
 })
 
 //type RootState = typeof rootReducer; // (globalstate: AppStateType) => AppStateType

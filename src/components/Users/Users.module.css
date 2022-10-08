@@ -86,8 +86,7 @@
   font-style: italic;
 }
 
-.btn_Search,
-button {
+.btn_Search{
   background-color: #fafbfc;
   border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
@@ -108,8 +107,7 @@ button {
   cursor: pointer;
 }
 
-.btn_Search:hover,
-button:hover {
+.btn_Search:hover{
   background-color: #24292e;
   color: #fafbfc;
   text-decoration: none;
@@ -124,3 +122,5 @@ button:hover {
 .input_Search {
   padding: 25px;
 }
+
+
